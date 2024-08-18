@@ -14,5 +14,9 @@ export default defineNuxtConfig({
         preset: Aura
       }
     }
+  },
+  // 全局路由过渡效果
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' }
   }
 })
