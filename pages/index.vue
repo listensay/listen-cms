@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import Editor from 'primevue/editor';
+import Editor from 'primevue/editor'
 const value = ref('123')
 </script>
 
