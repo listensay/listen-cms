@@ -3,7 +3,7 @@
  */
 export function hellper() {
   return {
-    success: function(message: string, data: any = null, ) {
+    success: function(message: string = 'OK', data: any = null, ) {
       return {
         statusCode: 200,
         message,
