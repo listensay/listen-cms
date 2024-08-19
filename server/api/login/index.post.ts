@@ -1,8 +1,24 @@
-export default defineEventHandler(async () => {
+import joi from 'joi'
+
+export default defineEventHandler(async (event) => {
   try {
-    return hellper().success(await checkPassword('123456', '$2b$10$UClYachgb8tY5f/Avf7g2enMNBxd4ww.fCh9ChdTEduU6TjLYomDm'))
+    const body = await readBody(event)
+
+    // 数据校验
+    const state = await useValidate(body ,{
+      username: joi.string().required(),
+      password: joi.string().required()
+    })
+    if(!state){
+      setResponseStatus(event, 400)
+      return hellper().error(400, '数据校验错误', false)
+    }
+
+    // 逻辑代码
+
+    return hellper().success()
   } catch (error) {
     console.log(error)
-    return hellper().error(500)
+    return hellper().error()
   }
 })
