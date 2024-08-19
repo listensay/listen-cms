@@ -3,10 +3,10 @@
  */
 export function hellper() {
   return {
-    success: function(data: any = null) {
+    success: function(message: string, data: any = null, ) {
       return {
         statusCode: 200,
-        message: 'OK',
+        message,
         success: true,
         body: data,
       }
