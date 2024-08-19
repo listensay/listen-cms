@@ -15,6 +15,7 @@
     "@primevue/themes": "^4.0.4",
     "@prisma/nuxt": "^0.0.35",
     "bcrypt": "^5.1.1",
+    "joi": "^17.13.3",
     "nuxt": "^3.12.4",
     "primevue": "^4.0.4",
     "quill": "^2.0.2",
