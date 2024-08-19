@@ -1,4 +1,6 @@
 import joi from 'joi'
+import jwt from 'jsonwebtoken'
+import prisma from '~/lib/prisma'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -15,8 +17,36 @@ export default defineEventHandler(async (event) => {
     }
 
     // 逻辑代码
+    // 用户登陆
+  
+    const user = await prisma.user.findFirst({
+      where: {
+        username: body.username
+      }
+    })
 
-    return hellper().success()
+    if(!user) {
+      setResponseStatus(event, 400)
+      return hellper().error(400, '该用户名不存在', false)
+    }
+  
+    const equalPassword = await checkPassword(body.password, user.password)
+    if(!equalPassword) {
+      setResponseStatus(event, 400)
+      return hellper().error(400, '密码错误', false)
+    }
+
+    const token = jwt.sign(
+      {
+        data: {
+          id: user.id,
+          username: user.username
+        }
+      },
+      useRuntimeConfig().SECRET_KEY
+    )
+
+    return hellper().success('登陆成功', { token })
   } catch (error) {
     console.log(error)
     return hellper().error()
