@@ -8,7 +8,7 @@ export function hellper() {
         statusCode: 200,
         statusMessage: 'OK',
         success: true,
-        body: { ...data },
+        body: data ,
       }
     },
     error: function(code: number) {
