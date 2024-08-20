@@ -1,5 +1,10 @@
 
 <script setup>
+import useAppStore from '~/store'
+
+const appStore = useAppStore()
+const { user } = storeToRefs(appStore)
+
 const items = ref([
   {
       separator: true
@@ -62,10 +67,15 @@ const items = ref([
           </template>
           <template #end>
               <button v-ripple class="relative overflow-hidden w-full border-0 bg-transparent flex items-start p-2 pl-4 hover:bg-surface-100 dark:hover:bg-surface-800 rounded-none cursor-pointer transition-colors duration-200">
-                  <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" class="mr-2" shape="circle" />
+                  <template v-if="user.avatar">
+                        <Avatar :image="user.avatar" class="mr-2" shape="circle" />
+                  </template>
+                  <template v-else>
+                        <Avatar :label="user.username[0]" class="mr-2" shape="circle" />
+                  </template>
                   <span class="inline-flex flex-col items-start">
-                      <span class="font-bold">Amy Elsner</span>
-                      <span class="text-sm">Admin</span>
+                      <span class="font-bold">{{ user.nickename || '还没有设置昵称捏' }}</span>
+                      <span class="text-sm">{{ user.username }}</span>
                   </span>
               </button>
           </template>
