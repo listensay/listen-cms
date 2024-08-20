@@ -14,6 +14,7 @@ const submit = async () => {
     }
     token.value = result.body.token
     useAppStore().isLogin = true
+    navigateTo('/admin')
   } catch {}
 }
 
