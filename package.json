@@ -12,17 +12,20 @@
   },
   "dependencies": {
     "@nuxtjs/tailwindcss": "^6.12.1",
+    "@pinia/nuxt": "^0.5.3",
     "@primevue/themes": "^4.0.4",
     "@prisma/nuxt": "^0.0.35",
     "bcrypt": "^5.1.1",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "nuxt": "^3.12.4",
+    "pinia": "^2.2.2",
     "primevue": "^4.0.4",
     "quill": "^2.0.2",
     "vue": "latest"
   },
   "devDependencies": {
+    "@ant-design-vue/nuxt": "^1.4.2",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@primevue/nuxt-module": "^4.0.4",
     "@prisma/client": "^5.18.0",
