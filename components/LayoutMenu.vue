@@ -39,10 +39,6 @@ const items = ref([
           {
               label: '消息',
               icon: 'pi pi-inbox',
-          },
-          {
-              label: '退出',
-              icon: 'pi pi-sign-out',
           }
       ]
   }
@@ -50,8 +46,8 @@ const items = ref([
 </script>
 
 <template>
-  <div class="card flex justify-center h-[100vh]">
-      <Menu :model="items" class="flex flex-col w-full h-full md:w-60" style="border-radius: 0;">
+  <div class="card flex justify-center">
+      <Menu :model="items" class="flex flex-col w-full h-full md:w-60">
           <template #start>
               <span class="inline-flex items-center gap-1 px-2 py-2">
                   LOGO

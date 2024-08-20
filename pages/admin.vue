@@ -7,8 +7,7 @@ definePageMeta({
   layout: 'admin'
 })
 
-const result = await useRequestGet('/api/user')
-appStore.user = result.body.user
+await appStore.fetchGetUserInfo()
 </script>
 
 <template>

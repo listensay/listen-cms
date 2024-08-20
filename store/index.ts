@@ -7,12 +7,16 @@ const useAppStore = defineStore('app', {
         bio:'',
         email:'',
         nickename:'',
-        username:''
+        username: ''
       }
     }
   },
   actions: {
-
+    async fetchGetUserInfo() {
+      const result = await useRequestGet('/api/user')
+      this.user = result.body.user
+      return this.user
+    }
   }
 })
 

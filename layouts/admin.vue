@@ -2,11 +2,13 @@
 </script>
 
 <template>
-  <div class="layout">
-    <div class="flex">
+  <div class="layout bg-slate-200">
+    <div class="flex p-8 h-[100vh]">
       <LayoutMenu />
-      <div class="flex-1">
-        <slot />
+      <div class="flex-1 ml-4">
+        <div class="bg-white shadow-md rounded-md h-full">
+          <slot />
+        </div>
       </div>
     </div>
   </div>
