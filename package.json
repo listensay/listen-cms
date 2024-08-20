@@ -20,6 +20,7 @@
     "jsonwebtoken": "^9.0.2",
     "nuxt": "^3.12.4",
     "pinia": "^2.2.2",
+    "primeicons": "^7.0.0",
     "primevue": "^4.0.4",
     "quill": "^2.0.2",
     "vue": "latest"

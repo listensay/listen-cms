@@ -12,7 +12,8 @@ export default defineNuxtConfig({
     '@ant-design-vue/nuxt',
   ],
   css: [
-    '@/assets/css/style.css'
+    '@/assets/css/style.css',
+    'primeicons/primeicons.css'
   ],
   primevue: {
     options: {
