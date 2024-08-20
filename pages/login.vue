@@ -1,6 +1,31 @@
 <script setup>
-const submit = () => {
+import useAppStore from '~/store'
+const token = useCookie('token')
+const submit = async () => {
+  // 判断内容
+  if(userData.username === '' || userData.password === '') 
+    return show()
+  
+  // 登陆逻辑
+  try {
+    const result = await useRequestPost('/api/login', userData)
+    if(result.statusCode === 200) {
+      toast.add({severity: 'success', summary: '登陆成功', detail: '欢迎回来', life: 3000})
+    }
+    token.value = result.body.token
+    useAppStore().isLogin = true
+  } catch {}
+}
 
+const userData = reactive({
+  username: '',
+  password: ''
+})
+
+const toast = useToast()
+
+const show = () => {
+  toast.add({severity: 'error', summary: '内容不完整', detail: '请填写完整内容', life: 3000})
 }
 </script>
 
@@ -8,31 +33,18 @@ const submit = () => {
   <div class="login">
     <div class="flex h-[100vh]">
       <div class="flex-1 flex justify-center items-center">
-        <div>
-          <div class="mb-4 text-3xl">Hello</div>
-          <div class="mb-8 text-zinc-600">欢迎使用Listenc-cms</div>
-
-          <form @submit="submit">
-            <div class="mb-4">
-              <FloatLabel>
-                <InputText id="username" v-model="value" />
-                <label for="username">Username</label>
-              </FloatLabel>
-            </div>
-            <div class="mb-4">
-              <FloatLabel>
-                <InputText id="username" v-model="value" />
-                <label for="username">Username</label>
-              </FloatLabel>
-            </div>
-            <div class="mb-6">
-              <Button label="Submit" />
-            </div>
-
-            <button>123</button>
-
-          </form>
-        </div>
+        <form @submit.prevent="submit">
+          <div class="mb-4">
+            <label for="username" class="mr-4">Username</label>
+            <InputText id="username" v-model="userData.username" aria-describedby="username-help" />
+          </div>
+          <div class="mb-4">
+            <label for="password" class="mr-4">Password</label>
+            <InputText id="password" v-model="userData.password" aria-describedby="username-help" />
+          </div>
+          <Toast />
+          <Button label="Submit" @click="submit">Login</Button>
+        </form>
       </div>
       <div class="flex-1 bg-gradient-to-r from-cyan-500 to-blue-500"></div>
     </div>
