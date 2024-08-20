@@ -27,6 +27,10 @@ const toast = useToast()
 const show = () => {
   toast.add({severity: 'error', summary: '内容不完整', detail: '请填写完整内容', life: 3000})
 }
+
+definePageMeta({
+  middleware: 'only-visitor'
+})
 </script>
 
 <template>
