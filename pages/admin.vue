@@ -12,7 +12,7 @@ await appStore.fetchGetUserInfo()
 
 <template>
   <div class="admin">
-    <div class="p-6">
+    <div>
       <NuxtPage />
     </div>
   </div>
