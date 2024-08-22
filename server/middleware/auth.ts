@@ -19,6 +19,7 @@ export default defineEventHandler(async (event) => {
           id
         },
         select: {
+          id: true,
           username: true,
           email: true,
           nickename: true,
@@ -44,6 +45,10 @@ export default defineEventHandler(async (event) => {
       event.context.auth = {
         success: false
       }
+    }
+  } else {
+    event.context.auth = {
+      success: false
     }
   }
 })
