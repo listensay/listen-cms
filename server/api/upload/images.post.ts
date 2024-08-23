@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
   const form = formidable({
     uploadDir,
     multiples: true, // 支持多文件
-    maxFileSize: 5 * 1024 * 1024, // 5MB 大小限制
+    maxFileSize: 20 * 1024 * 1024, // 5MB 大小限制
     keepExtensions: true, // 保留文件扩展名
     // 文件名重命名
     filename: (name: string, ext: string) => {
