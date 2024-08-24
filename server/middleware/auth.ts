@@ -3,7 +3,8 @@ import prisma from '~/lib/prisma'
 
 export default defineEventHandler(async (event) => {
   // 获取token值
-  const token = getHeader(event, 'Authorization')
+  let token = getHeader(event, 'Authorization')
+  token = token?.replace('Bearer ', '')
 
   if (token) {
     // 获取秘钥
