@@ -17,15 +17,16 @@ export default defineEventHandler(async (event) => {
     }
 
     // 逻辑代码
-    // 用户登陆
-  
-    const user = await prisma.user.findFirst({
-      where: {
-        username: body.username
-      }
-    })
+    let user: any
 
-    if(!user) {
+    try {
+      // 用户登陆
+      user = await prisma.user.findFirst({
+        where: {
+          username: body.username
+        }
+      })
+    } catch {
       setResponseStatus(event, 400)
       return hellper().error(400, '该用户名不存在', false)
     }
