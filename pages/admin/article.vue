@@ -13,12 +13,12 @@ const items = [
   {
     label: '分类管理',
     icon: 'pi pi-fw pi-tag',
-    to: '/article',
+    url: '/admin/article/category',
   },
   {
     label: '标签管理',
     icon: 'pi pi-fw pi-hashtag',
-    to: '/article',
+    // url: '/article',
   }
 ]
 </script>

@@ -3,37 +3,10 @@ const article = reactive({
   title: '',
   content: '',
   category: '',
-  cover: '',
+  cover: [],
   description: '',
   published: true,
 })
-
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => resolve(reader.result)
-    reader.onerror = error => reject(error)
-  })
-}
-const previewVisible = ref(false)
-const previewImage = ref('')
-const previewTitle = ref('')
-const fileList = ref([])
-const handleCancel = () => {
-  previewVisible.value = false
-  previewTitle.value = ''
-}
-const handlePreview = async file => {
-  if (!file.url && !file.preview) {
-    file.preview = await getBase64(file.originFileObj)
-  }
-  previewImage.value = file.url || file.preview
-  previewVisible.value = true
-  previewTitle.value = file.name || file.url.substring(file.url.lastIndexOf('/') + 1)
-}
-
-const token = useCookie('token').value
 </script>
 
 <template>
@@ -55,21 +28,7 @@ const token = useCookie('token').value
           <div>
             <div class="mb-4">
               <div class="text-lg mb-2">文章缩略图</div>
-              <a-upload
-                v-model:file-list="fileList"
-                action="/api/upload/images"
-                list-type="picture-card"
-                :headers="{ Authorization: token }"
-                @preview="handlePreview"
-              >
-                <div v-if="fileList.length < 8">
-                  <plus-outlined />
-                  <div style="margin-top: 8px">Upload</div>
-                </div>
-              </a-upload>
-              <a-modal :open="previewVisible" :title="previewTitle" :footer="null" @cancel="handleCancel">
-                <img alt="example" style="width: 100%" :src="previewImage" />
-              </a-modal>
+              <AppUpload v-model="article.cover" />
             </div>
             <div class="mb-4">
               <div class="text-lg mb-2">文章分类</div>
