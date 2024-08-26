@@ -1,5 +1,7 @@
 <script setup>
-const fileList = defineModel()
+const images = defineModel()
+const fileList = ref([])
+// 图片展示处理
 function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
@@ -23,6 +25,13 @@ const handlePreview = async file => {
   previewVisible.value = true
   previewTitle.value = file.name || file.url.substring(file.url.lastIndexOf('/') + 1)
 }
+// 图片上传成功处理
+const handleChange = info => {
+  if (info.file.status === 'done') {
+    // 获取上传成功后的图片地址
+    images.value = info.file.response.body[0].url
+  }
+}
 
 const token = useCookie('token').value
 </script>
@@ -35,8 +44,9 @@ const token = useCookie('token').value
       list-type="picture-card"
       :headers="{ Authorization: token }"
       @preview="handlePreview"
+      @change="handleChange"
     >
-      <div v-if="fileList.length < 8">
+      <div v-if="fileList.length < 1">
         <plus-outlined />
         <div style="margin-top: 8px">Upload</div>
       </div>
