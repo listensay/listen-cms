@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
       cover: joi.string().required(),
       published: joi.boolean().required(),
       description: joi.string().required(),
-      categoryId: joi.string().required(),
+      category: joi.number().required(),
     })
     if(!state){
       setResponseStatus(event, 400)
@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
         cover: body.cover,
         published: body.published,
         description: body.description,
-        categoryId: body.categoryId
+        categoryId: body.category
       }
     })
 
