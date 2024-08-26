@@ -2,11 +2,24 @@
 const article = reactive({
   title: '',
   content: '',
-  category: '',
-  cover: [],
+  category: 1,
+  cover: '',
   description: '',
   published: true,
 })
+
+const submit = async () => {
+  // 校验文章标题,内容
+  if(!article.title || !article.content) {
+    return message.error('文章标题和内容不能为空')
+  }
+
+  const result = await useRequestPost('/api/article', article)
+  if(result.statusCode === 200) {
+    message.success('文章发布成功')
+    navigateTo('/admin/article/')
+  }
+}
 </script>
 
 <template>
@@ -17,7 +30,9 @@ const article = reactive({
           <InputText v-model="article.title" type="text" class="w-full" placeholder="文章标题"/>
         </div>
         <div class="mb-4">
-          <Editor v-model="article.content" editor-style="height: 320px" />
+          <ClientOnly>
+            <MonacoEditor v-model="content" style="height: 600px;" lang="markdown" :options="{ theme: 'vs-dark' }" />
+          </ClientOnly>
         </div>
         <div>
           <Textarea v-model="article.description" rows="4" cols="30" class="w-full" placeholder="文章描述"/>
@@ -41,7 +56,7 @@ const article = reactive({
               </div>
             </div>
             <div>
-              <Button label="发布文章" />
+              <Button label="发布文章" @click="submit" />
             </div>
           </div>
         </template>
