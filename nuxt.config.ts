@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@prisma/nuxt',
     '@pinia/nuxt',
     '@ant-design-vue/nuxt',
+    'nuxt-monaco-editor',
   ],
   css: [
     '@/assets/css/style.css',
