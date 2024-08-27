@@ -22,7 +22,7 @@ await getArticle()
       <DataTable :value="article" table-style="min-width: 50rem" striped-rows>
         <Column field="cover" header="文章缩略图">
           <template #body="slotProps">
-            <img :src="slotProps.data.cover" width="100" />
+            <NuxtImg :src="slotProps.data.cover" width="100" />
           </template>
         </Column>
         <Column field="title" header="文章标题">
