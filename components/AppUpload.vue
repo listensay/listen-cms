@@ -43,6 +43,18 @@ const handleChange = info => {
   }
 }
 
+watch(images, () => {
+  fileList.value = []
+  if(images.value) {
+    fileList.value.push({
+      uid: '-1',
+      name: images.value,
+      status: 'done',
+      url: images.value
+    })
+  }
+})
+
 const token = useCookie('token').value
 </script>
 
