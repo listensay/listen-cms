@@ -1,5 +1,5 @@
 <script setup>
-
+const id = useRoute().params.id
 const article = reactive({
   title: '',
   content: '',
@@ -9,14 +9,26 @@ const article = reactive({
   published: true,
 })
 
-const id = useRoute().params.id
-const result = await useRequestGet('/api/article/detail', { id })
-article.title = result.body.title
-article.content = result.body.content
-article.description = result.body.description
-article.cover = result.body.cover
-article.category = result.body.categoryId
-article.published = result.body.published
+const category = ref([])
+
+// 获取文章分类列表
+const getCategory = async () => {
+  const result = await useRequestGet('/api/category', { page: 1, total: 999 })
+  const list = result.body.list
+  category.value = list
+}
+
+// 获取文章详情
+const getDetail = async () => {
+  const result = await useRequestGet('/api/article/detail', { id })
+  article.title = result.body.title
+  article.content = result.body.content
+  article.description = result.body.description
+  article.cover = result.body.cover
+  article.category = result.body.categoryId
+  article.published = result.body.published
+}
+
 const submit = async () => {
   // 校验文章标题,内容
   if(!article.title || !article.content) {
@@ -30,6 +42,8 @@ const submit = async () => {
   }
 }
 
+await getDetail()
+await getCategory()
 </script>
 
 <template>
@@ -57,6 +71,13 @@ const submit = async () => {
             </div>
             <div class="mb-4">
               <div class="text-lg mb-2">文章分类</div>
+              <a-select
+                ref="select"
+                v-model:value="article.category"
+                style="width: 120px"
+              >
+                <a-select-option v-for="item in category" :key="item.id" :value="item.id">{{ item.name }}</a-select-option>
+              </a-select>
             </div>
             <div class="mb-4">
               <div class="text-lg mb-2">文章状态</div>
@@ -66,7 +87,7 @@ const submit = async () => {
               </div>
             </div>
             <div>
-              <Button label="发布文章" @click="submit" />
+              <Button label="保存" @click="submit" />
             </div>
           </div>
         </template>

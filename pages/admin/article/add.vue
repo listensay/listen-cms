@@ -8,6 +8,14 @@ const article = reactive({
   published: true,
 })
 
+const category = ref([])
+
+// 获取文章分类
+const getCategory = async () => {
+  const result = await useRequestGet('/api/category', { page: 1, total: 10 })
+  category.value = result.body.list
+}
+
 const submit = async () => {
   // 校验文章标题,内容
   if(!article.title || !article.content) {
@@ -20,6 +28,8 @@ const submit = async () => {
     navigateTo('/admin/article/')
   }
 }
+
+await getCategory()
 </script>
 
 <template>
@@ -47,6 +57,7 @@ const submit = async () => {
             </div>
             <div class="mb-4">
               <div class="text-lg mb-2">文章分类</div>
+              <Select v-model="article.category" :options="category" option-label="name" placeholder="选择分类" class="w-full md:w-56" />
             </div>
             <div class="mb-4">
               <div class="text-lg mb-2">文章状态</div>
