@@ -28,7 +28,8 @@ export default defineEventHandler(async (event) => {
     const category = await prisma.category.create({
       data: {
         name: body.name,
-        description: body.description
+        description: body.description,
+        cover: body.cover
       }
     })
 
