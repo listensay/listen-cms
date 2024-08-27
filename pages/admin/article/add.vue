@@ -57,7 +57,13 @@ await getCategory()
             </div>
             <div class="mb-4">
               <div class="text-lg mb-2">文章分类</div>
-              <Select v-model="article.category" :options="category" option-label="name" placeholder="选择分类" class="w-full md:w-56" />
+              <a-select
+                ref="select"
+                v-model:value="article.category"
+                style="width: 120px"
+              >
+                <a-select-option v-for="item in category" :key="item.id" :value="item.id">{{ item.name }}</a-select-option>
+              </a-select>
             </div>
             <div class="mb-4">
               <div class="text-lg mb-2">文章状态</div>
