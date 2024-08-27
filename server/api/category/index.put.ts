@@ -11,7 +11,9 @@ export default defineEventHandler(async (event) => {
       id: joi.number().required(),
       name: joi.string().min(1).required(),
       description: joi.string().min(1).required(),
-      cover: joi.string().min(1).required()
+      cover: joi.string().min(1).required(),
+      type: joi.number().valid(0, 1).required()
+
     })
     if (!state) {
       setResponseStatus(event, 400)
@@ -36,7 +38,8 @@ export default defineEventHandler(async (event) => {
         data: {
           name: body.name,
           description: body.description,
-          cover: body.cover
+          cover: body.cover,
+          type: body.type
         }
       })
     } catch  {

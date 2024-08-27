@@ -1,7 +1,7 @@
 import joi from 'joi'
 import prisma from '~/lib/prisma'
 
-// 添加分类
+// 添加图片
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event)
@@ -9,9 +9,8 @@ export default defineEventHandler(async (event) => {
     // 数据校验
     const state = await useValidate(body, {
       name: joi.string().min(1).required(),
-      description: joi.string().min(1).required(),
-      cover: joi.string().min(1).required(),
-      type: joi.number().valid(0, 1).required()
+      url: joi.string().min(1).required(),
+      categoryId: joi.number().min(1).required()
     })
     if (!state) {
       setResponseStatus(event, 400)
@@ -26,21 +25,24 @@ export default defineEventHandler(async (event) => {
     }
 
     // 逻辑代码
-    const category = await prisma.category.create({
+
+    // 创建图片
+    const images = await prisma.images.create({
       data: {
         name: body.name,
-        description: body.description,
-        cover: body.cover,
-        type: body.type
+        url: body.url,
+        categoryId: body.categoryId
       }
     })
 
-    if (!category) {
-      setResponseStatus(event, 500)
-      return hellper().error(500, '新建分类失败', false)
+    // 判断图片是否存在
+    if (!images) {
+      setResponseStatus(event, 400)
+      return hellper().error(400, '上传图片失败', false)
     }
 
-    return hellper().success('新建分类成功')
+    // 返回数据
+    return hellper().success('图片上传成功', images)
   } catch (error) {
     console.log(error)
     return hellper().error(500)

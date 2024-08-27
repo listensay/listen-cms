@@ -56,4 +56,6 @@ model Images {
   name     String
   categoryId Int @default(1)
   category Category @relation(fields: [categoryId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
