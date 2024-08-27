@@ -43,7 +43,17 @@ model Category {
   name  String
   description String?
   cover String?
+  type  Int? @default(0)
   articles Article[]
+  images Images[]
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Images {
+  id       Int      @id @default(autoincrement())
+  url      String
+  name     String
+  categoryId Int @default(1)
+  category Category @relation(fields: [categoryId], references: [id])
 }
