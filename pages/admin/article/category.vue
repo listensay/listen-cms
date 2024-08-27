@@ -4,12 +4,22 @@ const total = ref(10)
 const page = ref(1)
 const visible = ref(false)
 const title = ref('')
+const categoryType = [
+  {
+    label: '文章',
+    type: 0
+  }, {
+    label: '图片',
+    type: 1
+  }
+]
 
 const form = reactive({
   id: null,
   name: '',
   description: '',
-  cover: ''
+  cover: '',
+  type: 0
 })
 
 // 重置表单
@@ -18,6 +28,7 @@ const resetForm = () => {
   form.name = ''
   form.description = ''
   form.cover = ''
+  form.type = null
 }
 
 // 获取分类列表
@@ -42,6 +53,7 @@ const updateCategory = (data) => {
   form.name = data.name
   form.description = data.description
   form.cover = data.cover
+  form.type = data.type
 }
 // 点击添加按钮
 const addCategory = () => {
@@ -92,6 +104,11 @@ await getCategory()
         </template>
       </Column>
       <Column field="name" header="分类标题"></Column>
+      <Column field="type" header="分类类型">
+        <template #body="slotProps">
+          <Tag :severity="slotProps.data.type ? 'info' : 'success'" :value="categoryType[slotProps.data.type].label" />
+        </template>
+      </Column>
       <Column field="description" header="分类描述"></Column>
       <Column header="操作">
         <template #body="slotProps">
@@ -101,27 +118,45 @@ await getCategory()
       </Column>
     </DataTable> 
 
-    <Dialog v-model:visible="visible" modal :header="title" :style="{ width: '25rem' }">
-      <div class="flex items-center gap-4 mb-4">
-          <label for="name" class="font-semibold w-16">名称</label>
-          <InputText id="name" v-model="form.name" class="flex-auto" autocomplete="off" />
-      </div>
-      <div class="flex items-center gap-4 mb-8">
-          <label for="description" class="font-semibold w-16">描述</label>
-          <InputText id="description" v-model="form.description" class="flex-auto" autocomplete="off" />
-      </div>
-
-      <div class="flex items-center gap-4 mb-8">
-        <div class="font-semibold w-16">分类封面</div>
-        {{ form.cover }}
+    <a-modal
+      v-model:open="visible"
+      :title="title"
+      :ok-text="'完成'"
+      :cancel-text="'取消'"
+      @ok="submit"
+      @cancel="cancel"
+    >
+      <a-form-item
+        label="分类名称"
+        name="name"
+      >
+        <a-input v-model:value="form.name" />
+      </a-form-item>
+      <a-form-item
+        label="分类描述"
+        name="description"
+      >
+        <a-input v-model:value="form.description" />
+      </a-form-item>
+      <a-form-item
+        label="分类类型"
+        name="type"
+      >
+        <a-select
+          ref="select"
+          v-model:value="form.type"
+          style="width: 120px"
+        >
+          <a-select-option v-for="item in categoryType" :key="item.type" :value="item.type">{{ item.label }}</a-select-option>
+        </a-select>
+      </a-form-item>
+      <a-form-item
+        label="分类封面"
+        name="cover"
+      >
         <AppUpload v-model="form.cover" />
-      </div>
-
-      <div class="flex justify-end gap-2">
-          <Button type="button" label="取消" severity="secondary" @click="cancel"></Button>
-          <Button type="button" label="完成" @click="submit"></Button>
-      </div>
-    </Dialog>
+      </a-form-item>
+    </a-modal>
   </div>
 </template>
 

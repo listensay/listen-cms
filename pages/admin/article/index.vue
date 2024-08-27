@@ -34,7 +34,7 @@ await getArticle()
         <Column field="description" header="文章描述"></Column>
         <Column field="published" header="状态">
           <template #body="slotProps">
-            <Tag :severity="slotProps.data.published ? 'success' : 'danger'" :value="slotProps.data.published ? '已发布' : '未发布'"></Tag>
+            <Tag :severity="slotProps.data.published ? 'success' : 'danger'" :value="slotProps.data.published ? '已发布' : '未发布'" />
           </template>
         </Column>
         <Column header="操作">
