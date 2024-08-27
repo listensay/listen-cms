@@ -25,15 +25,27 @@ export default defineEventHandler(async (event) => {
     // 逻辑代码
     let category: any
 
+    // 查询分类ID是否存在
+    category = await prisma.category.findUnique({
+      where: {
+        id: Number(body.id)
+      }
+    })
+    if (!category) {
+      setResponseStatus(event, 400)
+      return hellper().error(400, '分类不存在', false)
+    }
+
     try {
       category = await prisma.category.delete({
         where: {
           id: Number(body.id)
         }
       })
-    } catch {
+    } catch (err) {
+      console.log(err)
       setResponseStatus(event, 400)
-      return hellper().error(400, '分类不存在', false)
+      return hellper().error(400, '该分类正在使用无法删除', false)
     }
 
     return hellper().success('删除分类成功', category)
