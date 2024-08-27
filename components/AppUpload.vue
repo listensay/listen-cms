@@ -1,6 +1,16 @@
 <script setup>
 const images = defineModel()
 const fileList = ref([])
+
+if(images.value) {
+  fileList.value.push({
+    uid: '-1',
+    name: images.value,
+    status: 'done',
+    url: images.value
+  })
+}
+
 // 图片展示处理
 function getBase64(file) {
   return new Promise((resolve, reject) => {
