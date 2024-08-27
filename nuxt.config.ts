@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@ant-design-vue/nuxt',
     'nuxt-monaco-editor',
+    "@nuxt/image"
   ],
   css: [
     '@/assets/css/style.css',
