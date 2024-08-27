@@ -44,9 +44,13 @@ const items = ref([
     <div class="flex p-8 h-[100vh]">
       <LayoutMenu :tabs="items"/>
       <div class="flex-1 ml-4">
-        <div class="h-full">
-          <slot />
-        </div>
+        <Card class="h-full">
+          <template #content>
+            <div>
+              <slot />
+            </div>
+          </template>
+        </Card>
       </div>
     </div>
   </div>

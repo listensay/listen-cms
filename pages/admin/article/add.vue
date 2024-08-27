@@ -48,7 +48,7 @@ await getCategory()
           <Textarea v-model="article.description" rows="4" cols="30" class="w-full" placeholder="文章描述"/>
         </div>
       </div>
-      <Card class="w-96">
+      <Card class="w-72">
         <template #content>
           <div>
             <div class="mb-4">
