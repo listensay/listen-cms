@@ -1,6 +1,17 @@
 module.exports = {
-  printWidth: 100,
-  semi: false,
+  printWidth: 80,
   singleQuote: true,
-  trailingComma: 'none'
+  trailingComma: "none",
+  bracketSpacing: true,
+  semi: false,
+  endOfLine: auto,
+  jsxSingleQuote: false,
+  overrides: [
+    {
+      "files": ".prettierrc",
+      "options": {
+        "parser": "json"
+      }
+    }
+  ]
 }
