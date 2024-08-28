@@ -24,12 +24,10 @@ const items = [
 </script>
 
 <template>
-  <div class="article">
-    <div class="flex">
-      <LayoutMenu :tabs="items" :hidden-logo="true" :hidden-user="true" />
-      <div class="flex-1 ml-4">
-        <NuxtPage />
-      </div>
+  <div class="article flex h-full">
+    <LayoutMenu :tabs="items" :hidden-logo="true" :hidden-user="true" />
+    <div class="flex-1 ml-4">
+      <NuxtPage />
     </div>
   </div>
 </template>

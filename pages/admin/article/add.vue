@@ -33,8 +33,8 @@ await getCategory()
 </script>
 
 <template>
-  <div class="article-add">
-    <div class="flex">
+  <div class="article-add h-full">
+    <div class="flex h-full">
       <div class="flex-1 mr-4">
         <div class="mb-4">
           <InputText v-model="article.title" type="text" class="w-full" placeholder="文章标题"/>
@@ -48,7 +48,7 @@ await getCategory()
           <Textarea v-model="article.description" rows="4" cols="30" class="w-full" placeholder="文章描述"/>
         </div>
       </div>
-      <Card class="w-72">
+      <Card class="w-72 h-full">
         <template #content>
           <div>
             <div class="mb-4">
