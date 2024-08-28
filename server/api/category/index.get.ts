@@ -9,7 +9,9 @@ export default defineEventHandler(async (event) => {
     // 数据校验
     const state = await useValidate(body, {
       page: joi.number().integer().min(1).required(),
-      total: joi.number().integer().min(1).required()
+      total: joi.number().integer().min(1).required(),
+      // 非必填,参数可选 0 1
+      type: joi.number().integer().min(0).max(1).optional()
     })
     if (!state) {
       setResponseStatus(event, 400)
@@ -30,7 +32,7 @@ export default defineEventHandler(async (event) => {
       take: Number(body.total),
       orderBy: {
         createdAt: 'desc'
-      }
+      },
     })
 
     // 获取总数

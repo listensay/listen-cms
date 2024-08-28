@@ -9,7 +9,8 @@ export default defineEventHandler(async (event) => {
     // 数据校验
     const state = await useValidate(body, {
       page: joi.number().integer().min(1).required(),
-      total: joi.number().integer().min(1).required()
+      total: joi.number().integer().min(1).required(),
+      categoryId: joi.number().integer().min(1).required()
     })
     if (!state) {
       setResponseStatus(event, 400)
@@ -30,7 +31,10 @@ export default defineEventHandler(async (event) => {
       take: Number(body.total),
       orderBy: {
         createdAt: 'desc'
-      }
+      },
+      where: {
+        categoryId: Number(body.categoryId)
+      },
     })
     // 获取总数
     const totalCount = await prisma.images.count()
