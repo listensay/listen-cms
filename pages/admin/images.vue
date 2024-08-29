@@ -19,8 +19,11 @@ tabs.value = tabsList.body.list
 const tab = ref(tabs.value[0])
 // 获取图片数据
 const getImages = async () => {
-  const result = await useFetchImages().auth.getImages(page.value, total.value, tab.value.id)
-  images.value = result.body.list
+  try {
+    const result = await useFetchImages().auth.getImages(page.value, total.value, tab.value.id)
+    images.value = result.body.list
+  } catch {
+  }
 }
 getImages()
 watch(tab, () => {
@@ -60,6 +63,18 @@ const resetForm = () => {
   form.url = ''
   form.categoryId = null
 }
+
+// 删除图片
+const deleteImage = async (id) => {
+  try {
+    const result = await useRequestDelete('/api/images', { id })
+    if(result.success) {
+      message.success('图片删除成功')
+      getImages()
+    }
+  } catch {
+  }
+}
 </script>
 
 <template>
@@ -71,9 +86,29 @@ const resetForm = () => {
       <div class="flex-1 pl-4">
         <Button label="上传图片" class="mb-4" @click="upload"/>
         <div class="grid grid-cols-4 gap-4">
-          <div v-for="item in images" :key="item.url">
-              <Image :src="item.url" :alt="item.name" preview/>
-          </div>
+          <ClientOnly>
+            <div v-for="item in images" :key="item.url" class="border-zinc-300 border rounded-md overflow-hidden">
+              <div class="relative">
+                <Image alt="Image" class="image w-full h-36" preview style="display: block;">
+                  <template #previewicon>
+                      <i class="pi pi-search"></i>
+                  </template>
+                  <template #image>
+                      <img :src="item.url" alt="image" />
+                  </template>
+                  <template #preview="slotProps">
+                      <img :src="item.url" alt="preview" :style="slotProps.style" @click="slotProps.onClick" />
+                  </template>
+                </Image>
+                <div class="absolute bottom-0 left-0 right-0 z-1 bg-slate-100/[.8] contrast-50 text-center">
+                  <span class="text-sm">{{ item.name }}</span>
+                </div>
+              </div>
+              <div class="bg-white p-4 text-center">
+                <Button class="ml-2" label="删除" text severity="danger" @click="deleteImage(item.id)"/>
+              </div>
+            </div>
+          </ClientOnly>
         </div>
       </div>
     </div>
@@ -95,4 +130,13 @@ const resetForm = () => {
   </div>
 </template>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.image {
+  img {
+    max-width: 100%;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+</style>
