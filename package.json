@@ -13,7 +13,6 @@
   "dependencies": {
     "@nuxt/image": "^1.7.0",
     "@nuxtjs/tailwindcss": "^6.12.1",
-    "@pinia/nuxt": "^0.5.3",
     "@primevue/themes": "^4.0.4",
     "@prisma/nuxt": "^0.0.35",
     "bcrypt": "^5.1.1",
@@ -22,7 +21,6 @@
     "jsonwebtoken": "^9.0.2",
     "nuxt": "^3.12.4",
     "nuxt-monaco-editor": "^1.2.9",
-    "pinia": "^2.2.2",
     "primeicons": "^7.0.0",
     "primevue": "^4.0.4",
     "quill": "^2.0.2",

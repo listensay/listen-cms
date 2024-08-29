@@ -1,5 +1,5 @@
 import { message } from 'ant-design-vue'
-import useAppStore from '~/store'
+// import useAppStore from '~/store'
 
 export const useRequest = async (url: any, options?: any) => {
   try {
@@ -22,9 +22,9 @@ export const useRequest = async (url: any, options?: any) => {
             break
           case 401:
             message.error(response._data.message)
-
             useCookie('token').value = null
-            useAppStore().isLogin = false
+            useUser().value.isLogin = false
+            navigateTo('/login')
             break
           case 403:
             message.error('服务器拒绝访问')

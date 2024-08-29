@@ -1,12 +1,7 @@
 <script setup>
-import useAppStore from '~/store'
-
-const appStore = useAppStore()
 definePageMeta({
   middleware: ['auth'],
 })
-
-await appStore.fetchGetUserInfo()
 
 const items = ref([
   {
@@ -47,6 +42,15 @@ const items = ref([
     ]
   }
 ])
+
+const userState = useUser()
+
+try {
+  const result = await useFetchUserProfile().auth.getUserInfo()
+  userState.value.userinfo = result
+} catch  {
+  
+}
 </script>
 
 <template>
@@ -58,6 +62,4 @@ const items = ref([
   </div>
 </template>
 
-<style lang="less" scoped>
-
-</style>
+<style lang="less" scoped></style>

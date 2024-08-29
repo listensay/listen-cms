@@ -8,10 +8,9 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@primevue/nuxt-module',
     '@prisma/nuxt',
-    '@pinia/nuxt',
     '@ant-design-vue/nuxt',
     'nuxt-monaco-editor',
-    "@nuxt/image"
+    '@nuxt/image'
   ],
   css: [
     '@/assets/css/style.css',

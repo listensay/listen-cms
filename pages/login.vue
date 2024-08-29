@@ -1,5 +1,4 @@
 <script setup>
-import useAppStore from '~/store'
 const token = useCookie('token')
 const submit = async () => {
   // 判断内容
@@ -13,7 +12,7 @@ const submit = async () => {
       toast.add({severity: 'success', summary: '登陆成功', detail: '欢迎回来', life: 3000})
     }
     token.value = result.body.token
-    useAppStore().isLogin = true
+    useUser().value.isLogin = true
     navigateTo('/admin')
   } catch {}
 }

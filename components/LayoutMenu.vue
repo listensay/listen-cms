@@ -1,6 +1,4 @@
 <script setup>
-import useAppStore from '~/store'
-
 defineProps({
   tabs: {
     type: Array,
@@ -16,8 +14,8 @@ defineProps({
   }
 })
 
-const appStore = useAppStore()
-const { user } = storeToRefs(appStore)
+const userState = useUser()
+const user = computed(() => userState.value.userinfo)
 </script>
 
 <template>
@@ -37,21 +35,18 @@ const { user } = storeToRefs(appStore)
               </NuxtLink>
           </template>
           <template v-if="!hiddenUser" #end>
-            <!-- TODO: pinia store ssr bug -->
-            <ClientOnly>
-                <button v-ripple class="relative overflow-hidden w-full border-0 bg-transparent flex items-start p-2 pl-4 hover:bg-surface-100 dark:hover:bg-surface-800 rounded-none cursor-pointer transition-colors duration-200">
-                    <template v-if="user.avatar">
-                          <Avatar :image="user.avatar" class="mr-2" shape="circle" />
-                    </template>
-                    <template v-else>
-                          <Avatar :label="user.username[0]" class="mr-2" shape="circle" />
-                    </template>
-                    <span class="inline-flex flex-col items-start">
-                        <span class="font-bold">{{ user.nickename || '还没有设置昵称捏' }}</span>
-                        <span class="text-sm">{{ user.username }}</span>
-                    </span>
-                </button>
-            </ClientOnly>
+            <button v-ripple class="relative overflow-hidden w-full border-0 bg-transparent flex items-start p-2 pl-4 hover:bg-surface-100 dark:hover:bg-surface-800 rounded-none cursor-pointer transition-colors duration-200">
+                <template v-if="user.avatar">
+                      <Avatar :image="user.avatar" class="mr-2" shape="circle" />
+                </template>
+                <template v-else>
+                      <Avatar :label="user.username[0]" class="mr-2" shape="circle" />
+                </template>
+                <span class="inline-flex flex-col items-start">
+                    <span class="font-bold">{{ user.nickename || '还没有设置昵称捏' }}</span>
+                    <span class="text-sm">{{ user.username }}</span>
+                </span>
+            </button>
           </template>
       </Menu>
   </div>
