@@ -10,6 +10,7 @@ const article = reactive({
 })
 
 const category = ref([])
+const visible = ref(false)
 
 // 获取文章分类列表
 const getCategory = async () => {
@@ -42,6 +43,10 @@ const submit = async () => {
   }
 }
 
+watch(() => article.cover, () => {
+  visible.value = false
+})
+
 await getDetail()
 await getCategory()
 </script>
@@ -67,7 +72,12 @@ await getCategory()
           <div>
             <div class="mb-4">
               <div class="text-lg mb-2">文章缩略图</div>
-              <AppUpload v-model="article.cover" />
+              <template v-if="article.cover === ''">
+                <Button label="上传缩略图" @click="visible = true" />
+              </template>
+              <template v-else>
+                <NuxtImg class="rounded-md" :src="article.cover" width="100" height="100" @click="visible = true" />
+              </template>
             </div>
             <div class="mb-4">
               <div class="text-lg mb-2">文章分类</div>
@@ -92,6 +102,9 @@ await getCategory()
           </div>
         </template>
       </Card>
+      <Dialog v-model:visible="visible" modal header="缩略图选择" :style="{ width: '80vw' }">
+        <Images v-model="article.cover" :choose="true" />
+      </Dialog>
     </div>
   </div>
 </template>

@@ -3,6 +3,7 @@ const category = ref([])
 const total = ref(10)
 const page = ref(1)
 const visible = ref(false)
+const visibleImg = ref(false)
 const title = ref('')
 const categoryType = [
   {
@@ -90,6 +91,9 @@ const cancel = () => {
   resetForm()
   visible.value = false
 }
+watch(() => form.cover, () => {
+  visibleImg.value = false
+})
 
 await getCategory()
 </script>
@@ -154,9 +158,17 @@ await getCategory()
         label="分类封面"
         name="cover"
       >
-        <AppUpload v-model="form.cover" />
+        <template v-if="form.cover === ''">
+          <Button label="上传缩略图" @click="visibleImg = true" />
+        </template>
+        <template v-else>
+          <NuxtImg class="rounded-md" :src="form.cover" width="100" height="100" @click="visibleImg = true" />
+        </template>
       </a-form-item>
     </a-modal>
+    <Dialog v-model:visible="visibleImg" modal header="缩略图选择" :style="{ width: '80vw' }">
+      <Images v-model="form.cover" :choose="true" />
+    </Dialog>
   </div>
 </template>
 
