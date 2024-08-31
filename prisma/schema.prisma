@@ -36,6 +36,8 @@ model Article {
   category  Category  @relation(fields: [categoryId], references: [id])
   createdAt DateTime  @default(now())
   updatedAt DateTime  @default(now()) @updatedAt
+  tags      Tags[]
+  views     Int       @default(0)
 }
 
 model Category {
@@ -56,6 +58,32 @@ model Images {
   name     String
   categoryId Int @default(1)
   category Category @relation(fields: [categoryId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Seo {
+    id       Int      @id @default(autoincrement())
+    title    String
+    keywords String
+    description String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Tags {
+  id       Int      @id @default(autoincrement())
+  name     String
+  articles Article[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Links {
+  id       Int      @id @default(autoincrement())
+  name     String
+  url      String
+  cover     String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 }
