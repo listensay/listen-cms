@@ -23,8 +23,9 @@ export default defineEventHandler(async (event) => {
     }
 
     // 逻辑代码
+    const skipValue = (Number(body.page) - 1) * Number(body.total)
     const article = await prisma.article.findMany({
-      skip: Number(body.page),
+      skip: skipValue,
       take: Number(body.total),
       orderBy: {
         createdAt: 'desc'

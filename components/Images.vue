@@ -76,7 +76,7 @@ const resetForm = () => {
 // 删除图片
 const deleteImage = async (id) => {
   try {
-    const result = await useRequestDelete('/api/images', { id })
+    const result = await useRequestDelete('/api/auth/images', { id })
     if(result.success) {
       message.success('图片删除成功')
       getImages()

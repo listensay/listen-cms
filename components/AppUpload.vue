@@ -62,7 +62,7 @@ const token = useCookie('token').value
   <div class="upload">
     <a-upload
       v-model:file-list="fileList"
-      action="/api/upload/images"
+      action="/api/auth/upload/images"
       list-type="picture-card"
       :headers="{ Authorization: token }"
       @preview="handlePreview"

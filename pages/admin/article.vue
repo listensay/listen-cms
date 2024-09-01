@@ -18,7 +18,7 @@ const items = [
   {
     label: '标签管理',
     icon: 'pi pi-fw pi-hashtag',
-    // url: '/article',
+    url: '/admin/article/tags',
   }
 ]
 </script>

@@ -9,7 +9,7 @@ export default function useCategoryFetch() {
        * @returns 分类列表
        */
       getCategories: async (page: number = 1, total: number = 10, type: number = 0) => {
-        return await useRequestGet('/api/category', { page, total, type})
+        return await useRequestGet('/api/auth/category', { page, total, type})
       }
     }
   }

@@ -14,14 +14,14 @@ const visible = ref(false)
 
 // 获取文章分类列表
 const getCategory = async () => {
-  const result = await useRequestGet('/api/category', { page: 1, total: 999 })
+  const result = await useRequestGet('/api/auth/category', { page: 1, total: 999 })
   const list = result.body.list
   category.value = list
 }
 
 // 获取文章详情
 const getDetail = async () => {
-  const result = await useRequestGet('/api/article/detail', { id })
+  const result = await useRequestGet('/api/auth/article/detail', { id })
   article.title = result.body.title
   article.content = result.body.content
   article.description = result.body.description
@@ -36,7 +36,7 @@ const submit = async () => {
     return message.error('文章标题和内容不能为空')
   }
   article.id = Number(id)
-  const result = await useRequestPut('/api/article', article)
+  const result = await useRequestPut('/api/auth/article', article)
   if(result.statusCode === 200) {
     message.success('文章修改成功')
     navigateTo('/admin/article/')
@@ -58,9 +58,9 @@ await getCategory()
         <div class="mb-4">
           <InputText v-model="article.title" type="text" class="w-full" placeholder="文章标题"/>
         </div>
-        <div class="mb-4">
+        <div class="mb-4 border p-2 rounded-md">
           <ClientOnly>
-            <MonacoEditor v-model="article.content" style="height: 600px;" lang="markdown" :options="{ theme: 'vs-dark' }" />
+            <MonacoEditor v-model="article.content" style="height: 600px;" lang="markdown" />
           </ClientOnly>
         </div>
         <div>

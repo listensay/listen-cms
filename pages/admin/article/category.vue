@@ -34,13 +34,13 @@ const resetForm = () => {
 
 // 获取分类列表
 const getCategory = async () => {
-  const result = await useRequestGet('/api/category', { page, total })
+  const result = await useRequestGet('/api/auth/category', { page, total })
   category.value = result.body.list
 }
 
 // 删除分类
 const deleteCategory = async (id) => {
-  const result = await useRequestDelete('/api/category', { id })
+  const result = await useRequestDelete('/api/auth/category', { id })
   if(result.success) {
     message.success('删除成功')
   }
@@ -67,7 +67,7 @@ const submit = async () => {
   // 根据ID判断是新增还是修改
   if(form.id) {
     // 修改
-    const result = await useRequestPut('/api/category', form)
+    const result = await useRequestPut('/api/auth/category', form)
     if(result.success) {
       message.success('修改成功')
       await getCategory()
@@ -77,7 +77,7 @@ const submit = async () => {
   } else {
     // 新增
     delete form.id
-    const result = await useRequestPost('/api/category', form)
+    const result = await useRequestPost('/api/auth/category', form)
     if(result.success) {
       message.success('新增成功')
       await getCategory()

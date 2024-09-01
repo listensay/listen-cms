@@ -1,12 +1,12 @@
 <script setup>
 const article = ref([])
 const getArticle = async () => {
-  const result = await useRequestGet('/api/article', { page: 1, total: 10 })
+  const result = await useRequestGet('/api/auth/article', { page: 1, total: 10 })
   article.value = result.body.list
 }
 
 const deleteArticle = async (data) => {
-  const result = await useRequestDelete('/api/article', { id: data.id })
+  const result = await useRequestDelete('/api/auth/article', { id: data.id })
   if(result.statusCode === 200) {
     message.success('删除成功')
   }

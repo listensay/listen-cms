@@ -6,7 +6,7 @@ export default function useFetchUserProfile() {
        * @returns 返回用户基本信息
        */
       getUserInfo: async () => {
-        const result = await useRequestGet('/api/user')
+        const result = await useRequestGet('/api/auth/user')
         return result.body.user
       }
     }
