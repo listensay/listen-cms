@@ -33,6 +33,7 @@ const items = ref([
         {
             label: '网站设置',
             icon: 'pi pi-cog',
+            url: '/admin/setting'
         },
         {
             label: '图片管理',
