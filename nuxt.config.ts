@@ -1,5 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import Aura from '@primevue/themes/aura'
+import nitroPublic from 'nitro-public-module'
+
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
@@ -30,4 +32,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     SECRET_KEY: process.env.SECRET_KEY
   },
+  nitro: {
+    modules: [nitroPublic()],
+  }
 })
