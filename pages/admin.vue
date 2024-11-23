@@ -3,12 +3,10 @@ definePageMeta({
   middleware: ['auth'],
 })
 
-const items = ref([
-  {
-    separator: true
-  },
+const tabs = [
   {
       label: '基本管理',
+      id: 1,
       items: [
         {
             label: '仪表盘',
@@ -29,6 +27,7 @@ const items = ref([
   },
   {
     label: '网站管理',
+    id: 2,
     items: [
         {
             label: '网站设置',
@@ -42,22 +41,13 @@ const items = ref([
         }
     ]
   }
-])
-
-const userState = useUser()
-
-try {
-  const result = await useFetchUserProfile().auth.getUserInfo()
-  userState.value.userinfo = result
-} catch  {
-  
-}
+]
 </script>
 
 <template>
   <div class="layout">
     <div class="flex p-8 bg-slate-200 h-[100vh]">
-      <LayoutMenu :tabs="items"/>
+      <AppMenu :tabs="tabs" />
       <NuxtPage class="ml-4 flex-1 h-full bg-white rounded-md p-4" />
     </div>
   </div>
