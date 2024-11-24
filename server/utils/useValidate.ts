@@ -13,7 +13,8 @@ const useValidate = async (body: any, options: any) => {
   try {
     await schema.validateAsync(body)
     return true
-  } catch {
+  } catch(error) {
+    console.log('erroe', error)
     return false
   }
 }

@@ -6,7 +6,7 @@ const tabs = [
       {
         label: '发布文章',
         icon: 'pi pi-fw pi-file-edit',
-        url: '/admin/article/add',
+        url: '/admin/article/post-0',
       },
       {
         label: '文章管理',
@@ -31,7 +31,7 @@ const tabs = [
 <template>
   <div class="article flex h-full">
     <AppMenu :tabs="tabs" />
-    <div class="flex-1 ml-4">
+    <div class="flex-1">
       <NuxtPage />
     </div>
   </div>

@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event)
 
     // 数据校验
-    const state = await useValidate(body ,{
+    const state = useValidate(body ,{
       id: joi.number().required(),
       title: joi.string().required(),
       content: joi.string().required(),
@@ -16,6 +16,7 @@ export default defineEventHandler(async (event) => {
       description: joi.string().required(),
       category: joi.number().required(),
     })
+
     if(!state){
       setResponseStatus(event, 400)
       return hellper().error(400, '数据校验错误', false)

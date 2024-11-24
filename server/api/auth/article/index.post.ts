@@ -6,14 +6,21 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event)
 
     // 数据校验
-    const state = await useValidate(body ,{
-      title: joi.string().required(),
-      content: joi.string().required(),
-      cover: joi.string().required(),
-      published: joi.boolean().required(),
-      description: joi.string().required(),
-      category: joi.number().required(),
-    })
+    let state
+
+    try {
+      state = await useValidate(body ,{
+        title: joi.string().required(),
+        content: joi.string().required(),
+        cover: joi.string().required(),
+        published: joi.boolean().required(),
+        description: joi.string().required(),
+        category: joi.number().required(),
+      })
+    } catch (error) {
+      console.log(error)
+    }
+
     if(!state){
       setResponseStatus(event, 400)
       return hellper().error(400, '数据校验错误', false)
