@@ -1,10 +1,13 @@
 <script setup>
+import { rules } from '@/utils/antd_form_rules'
+
 const category = ref([])
 const total = ref(10)
 const page = ref(1)
 const visible = ref(false)
 const visibleImg = ref(false)
 const title = ref('')
+const formRef = ref()
 const categoryType = [
   {
     label: '文章',
@@ -22,15 +25,6 @@ const form = reactive({
   cover: '',
   type: 0
 })
-
-// 重置表单
-const resetForm = () => {
-  form.id = null
-  form.name = ''
-  form.description = ''
-  form.cover = ''
-  form.type = null
-}
 
 // 获取分类列表
 const getCategory = async () => {
@@ -60,35 +54,39 @@ const updateCategory = (data) => {
 const addCategory = () => {
   visible.value = true
   title.value = '添加分类'
-  resetForm()
 }
 // 点击完成按钮
-const submit = async () => {
-  // 根据ID判断是新增还是修改
-  if(form.id) {
-    // 修改
-    const result = await useRequestPut('/api/auth/category', form)
-    if(result.success) {
-      message.success('修改成功')
-      await getCategory()
-      resetForm()
-      visible.value = false
-    }
-  } else {
-    // 新增
-    delete form.id
-    const result = await useRequestPost('/api/auth/category', form)
-    if(result.success) {
-      message.success('新增成功')
-      await getCategory()
-      resetForm()
-      visible.value = false
-    }
-  }
+const submit = () => {
+  formRef.value
+    .validate()
+    .then(async () => {
+      // 根据ID判断是新增还是修改
+      if(form.id) {
+        // 修改
+        const result = await useRequestPut('/api/auth/category', form)
+        if(result.success) {
+          message.success('修改成功')
+          await getCategory()
+          visible.value = false
+        }
+      } else {
+        // 新增
+        delete form.id
+        const result = await useRequestPost('/api/auth/category', form)
+        if(result.success) {
+          message.success('新增成功')
+          await getCategory()
+          visible.value = false
+        }
+      }
+    })
+    .catch(error => {
+      console.log('error', error)
+    })
 }
 // 取消按钮
 const cancel = () => {
-  resetForm()
+  formRef.value.resetFields()
   visible.value = false
 }
 watch(() => form.cover, () => {
@@ -96,31 +94,76 @@ watch(() => form.cover, () => {
 })
 
 await getCategory()
+
+const columns = [
+  {
+    title: '分类封面',
+    dataIndex: 'cover',
+    key: 'cover',
+    width: '120px',
+  },
+  {
+    title: '分类标题',
+    dataIndex: 'name',
+    key: 'name'
+  },
+  {
+    title: '分类描述',
+    dataIndex: 'description',
+    key: 'description'
+  },
+  {
+    title: '分类类型',
+    dataIndex: 'type',
+    key: 'type',
+    width: '120px',
+    scopedSlots: { customRender: 'type' }
+  },
+  {
+    title: '操作',
+    dataIndex: 'action',
+    key: 'action',
+  }
+]
 </script>
 
 <template>
-  <div class="category">
-    <Button class="mb-4" type="button" label="添加分类" @click="addCategory"></Button>
-    <DataTable :value="category" table-style="min-width: 50rem" striped-rows>
-      <Column field="cover" header="分类封面">
-        <template #body="slotProps">
-          <NuxtImg :src="slotProps.data.cover" width="100" />
+  <div class="category ml-4">
+    <a-button class="mb-4" type="primary" @click="addCategory">添加分类</a-button>
+    <a-table :columns="columns" :data-source="category">
+      <template #headerCell="{ column }">
+        <template v-if="column.key === 'name'">
+          <span>
+            Name
+          </span>
         </template>
-      </Column>
-      <Column field="name" header="分类标题"></Column>
-      <Column field="type" header="分类类型">
-        <template #body="slotProps">
-          <Tag :severity="slotProps.data.type ? 'info' : 'success'" :value="categoryType[slotProps.data.type].label" />
+      </template>
+  
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'name'">
+          <a>
+            {{ record.name }}
+          </a>
         </template>
-      </Column>
-      <Column field="description" header="分类描述"></Column>
-      <Column header="操作">
-        <template #body="slotProps">
-          <Button label="删除" severity="danger" class="mr-4" @click="deleteCategory(slotProps.data.id)" />
-          <Button label="修改" severity="info" @click="updateCategory(slotProps.data)" />
+
+        <template v-else-if="column.key === 'cover'">
+          <NuxtImg :src="record.cover" width="100" />
         </template>
-      </Column>
-    </DataTable> 
+
+        <template v-else-if="column.key === 'type'">
+          <a-tag :bordered="false" :color="record.type != 0 ? 'orange' : 'success'">
+              {{ record.type !=0 ? '图片' : '文章' }}
+          </a-tag>
+        </template>
+
+        <template v-else-if="column.key === 'action'">
+          <span>
+            <a-button type="primary" size="small" @click="updateCategory(record)">编辑</a-button>
+            <a-button type="danger" size="small" @click="deleteCategory(record)">删除</a-button>
+          </span>
+        </template>
+      </template>
+    </a-table>
 
     <a-modal
       v-model:open="visible"
@@ -130,45 +173,55 @@ await getCategory()
       @ok="submit"
       @cancel="cancel"
     >
-      <a-form-item
-        label="分类名称"
-        name="name"
+      <a-form
+        ref="formRef"
+        :model="form"
+        :rules="rules"
       >
-        <a-input v-model:value="form.name" />
-      </a-form-item>
-      <a-form-item
-        label="分类描述"
-        name="description"
-      >
-        <a-input v-model:value="form.description" />
-      </a-form-item>
-      <a-form-item
-        label="分类类型"
-        name="type"
-      >
-        <a-select
-          ref="select"
-          v-model:value="form.type"
-          style="width: 120px"
+        <a-form-item
+          label="分类名称"
+          name="name"
         >
-          <a-select-option v-for="item in categoryType" :key="item.type" :value="item.type">{{ item.label }}</a-select-option>
-        </a-select>
-      </a-form-item>
-      <a-form-item
-        label="分类封面"
-        name="cover"
-      >
-        <template v-if="form.cover === ''">
-          <Button label="上传缩略图" @click="visibleImg = true" />
-        </template>
-        <template v-else>
-          <NuxtImg class="rounded-md" :src="form.cover" width="100" height="100" @click="visibleImg = true" />
-        </template>
-      </a-form-item>
+          <a-input v-model:value="form.name" />
+        </a-form-item>
+        <a-form-item
+          label="分类描述"
+          name="description"
+        >
+          <a-input v-model:value="form.description" />
+        </a-form-item>
+        <a-form-item
+          label="分类类型"
+          name="type"
+        >
+          <a-select
+            ref="select"
+            v-model:value="form.type"
+            style="width: 120px"
+          >
+            <a-select-option v-for="item in categoryType" :key="item.type" :value="item.type">{{ item.label }}</a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item
+          label="分类封面"
+          name="cover"
+        >
+          <template v-if="form.cover === ''">
+            <a-button @click="visibleImg = true">上传缩略图</a-button>
+          </template>
+          <template v-else>
+            <NuxtImg class="rounded-md" :src="form.cover" width="100" height="100" @click="visibleImg = true" />
+          </template>
+        </a-form-item>
+      </a-form>
     </a-modal>
-    <Dialog v-model:visible="visibleImg" modal header="缩略图选择" :style="{ width: '80vw' }">
+    <a-modal
+      v-model:open="visibleImg"
+      title="缩略图选择"
+      width="80vw"
+    >
       <Images v-model="form.cover" :choose="true" />
-    </Dialog>
+    </a-modal>
   </div>
 </template>
 

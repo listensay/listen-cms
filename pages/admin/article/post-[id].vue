@@ -1,4 +1,5 @@
 <script setup>
+import { rules } from '@/utils/antd_form_rules'
 const id = Number(useRoute().params.id)
 
 const article = reactive({
@@ -62,7 +63,6 @@ const pushPost = async () => {
 
 const updatePost = async () => {
   article.id = id
-  console.log(article)
   const result = await useRequestPut('/api/auth/article', article)
   if(result.statusCode === 200) {
     message.success('文章修改成功')
@@ -77,36 +77,6 @@ watch(() => article.cover, () => {
 
 await getCategory()
 
-const rules = {
-  title: [
-    {
-      required: true,
-      message: '请输入文章标题',
-      trigger: 'blur',
-    },
-  ],
-  content: [
-    {
-      required: true,
-      message: '请输入文章内容',
-      trigger: 'blur',
-    },
-  ],
-  description: [
-    {
-      required: true,
-      message: '请输入文章描述',
-      trigger: 'blur',
-    },
-  ],
-  cover: [
-    {
-      required: true,
-      message: '请上传文章缩略图',
-      trigger: 'blur',
-    },
-  ],
-}
 </script>
 
 <template>
