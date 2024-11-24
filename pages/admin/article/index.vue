@@ -1,10 +1,12 @@
 <script setup>
 const article = ref([])
+// 获取文章列表
 const getArticle = async () => {
   const result = await useRequestGet('/api/auth/article', { page: 1, total: 10 })
   article.value = result.body.list
 }
 
+// 删除文章
 const deleteArticle = async (data) => {
   const result = await useRequestDelete('/api/auth/article', { id: data.id })
   if(result.statusCode === 200) {
@@ -14,36 +16,62 @@ const deleteArticle = async (data) => {
 }
 
 await getArticle()
+
+const columns = [
+  {
+    title: '文章标题',
+    dataIndex: 'title',
+    key: 'title'
+  },
+  {
+    title: '文章分类',
+    dataIndex: 'category',
+    key: 'category'
+  },
+  {
+    title: '发布日期',
+    dataIndex: 'createdAt',
+  },
+  {
+    title: '最后一次更新日期',
+    dataIndex: 'updatedAt',
+  },
+  {
+    title: '',
+    dataIndex: 'action',
+    key: 'action',
+    width: '150px',
+  }
+]
 </script>
 
 <template>
-  <div class="article-admin">
+  <div class="article-admin ml-4">
     <div class="border-sky-100">
-      <DataTable :value="article" table-style="min-width: 50rem" striped-rows>
-        <Column field="cover" header="文章缩略图">
-          <template #body="slotProps">
-            <NuxtImg :src="slotProps.data.cover" width="100" />
+      <a-table :columns="columns" :data-source="article" bordered>
+        <template #bodyCell="{ column, text, record }">
+          <template v-if="column.dataIndex === 'name'">
+            <a>{{ text }}</a>
           </template>
-        </Column>
-        <Column field="title" header="文章标题">
-          <template #body="slotProps">
-            <NuxtLink :to="`/admin/article/edit/${slotProps.data.id}`">{{ slotProps.data.title }}</NuxtLink>
+          <!-- 文章标题 -->
+          <template v-if="column.key === 'title'">
+            <NuxtLink :to="`/admin/article/post-${record.id}`">{{ record.title }}</NuxtLink>
           </template>
-        </Column>
-        <Column field="category.name" header="文章分类"></Column>
-        <Column field="description" header="文章描述"></Column>
-        <Column field="published" header="状态">
-          <template #body="slotProps">
-            <Tag :severity="slotProps.data.published ? 'success' : 'danger'" :value="slotProps.data.published ? '已发布' : '未发布'" />
+          <!-- 文章缩略图 -->
+          <template v-if="column.key === 'cover'">
+            <img :src="record.cover" alt="" width="70" height="70" class=" rounded-md">
           </template>
-        </Column>
-        <Column header="操作">
-          <template #body="slotProps">
-            <Button icon="pi pi-pencil" rounded outlined class="mr-2" severity="info" @click="navigateTo(`/admin/article/edit/${slotProps.data.id}`)" />
-            <Button icon="pi pi-trash" rounded outlined severity="danger" @click="deleteArticle(slotProps.data)" />
+          <!-- 文章分类 -->
+          <template v-if="column.key === 'category'">
+            <span>{{ record.category.name }}</span>
           </template>
-        </Column>
-      </DataTable> 
+          <!-- 操作 -->
+          <template v-if="column.key === 'action'">
+            <a-button type="danger" size="small" @click="deleteArticle(record)">删除</a-button>
+          </template>
+        </template>
+        <template #title>文章管理</template>
+      </a-table>
     </div>
   </div>
 </template>
