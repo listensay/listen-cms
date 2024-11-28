@@ -1,7 +1,21 @@
 <script setup>
 defineProps({
-  tabs: Array
+  tabs: {
+    type: Array,
+    default: () => []
+  },
+  router: {
+    type: Boolean,
+    default: true
+  }
 })
+
+const emits = defineEmits(['change'])
+
+const changeMenu = (tab, index) => {
+  currentPath.value = tab.url
+  emits('change', index)
+}
 
 const route = useRoute()
 const currentPath = ref(route.fullPath)
@@ -15,11 +29,16 @@ const currentPath = ref(route.fullPath)
           <dd v-if="item.items">
             <ul>
               <li 
-                v-for="tab in item.items" :key="tab.url"
+                v-for="(tab, index) in item.items" :key="tab.url"
                 :class="`${currentPath === tab.url ? ' bg-zinc-100 rounded-md' : ''}`"
-                @click="currentPath = tab.url"
+                @click="changeMenu(tab, index)"
               >
-                <nuxt-link :to="tab.url" class="block p-4 py-3 my-2 rounded-md">{{ tab.label }}</nuxt-link>
+                <template v-if="router">
+                  <nuxt-link :to="tab.url" class="block p-4 py-3 my-2 rounded-md">{{ tab.label }}</nuxt-link>
+                </template>
+                <template v-else>
+                  <div class="block p-4 py-3 my-2 rounded-md">{{ tab.label }}</div>
+                </template>
               </li>
             </ul>
           </dd>

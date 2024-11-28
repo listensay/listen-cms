@@ -35,6 +35,11 @@ const tabs = [
             url: '/admin/setting'
         },
         {
+            label: '个人资料',
+            icon: 'pi pi-profile',
+            url: '/admin/profile'
+        },
+        {
             label: '图片管理',
             icon: 'pi pi-images',
             url: '/admin/images'

@@ -9,7 +9,7 @@ const tabs = [
         url: '/admin/article/post-0',
       },
       {
-        label: '文章管理',
+        label: '文章列表',
         icon: 'pi pi-fw pi-file',
         url: '/admin/article',
       },
