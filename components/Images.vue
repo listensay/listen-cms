@@ -25,18 +25,20 @@ const form = reactive({
 // 获取分类列表
 const tabsList = await useFetchCategory().auth.getCategories()
 tabs.value = tabsList.body.list
-const tab = ref(tabs.value[0])
+const tab = ref(tabs.value[0].id)
+
 // 获取图片数据
 const getImages = async () => {
   try {
-    const result = await useFetchImages().auth.getImages(page.value, total.value, tab.value.id)
+    const result = await useFetchImages().auth.getImages(page.value, total.value, tab.value)
     images.value = result.body.list
   } catch {
   }
 }
-getImages()
-watch(tab, () => {
-  getImages()
+await getImages()
+
+watch(tab, async () => {
+  await getImages()
 })
 
 const upload = () => {
@@ -94,62 +96,50 @@ const chooseHandle = (url) => {
   <div class="images h-full">
     <div class="flex h-full">
       <div class="w-52">
-        <Listbox v-model="tab" :options="tabs" option-label="name" class="w-full md:w-52"/>
+        <span>
+          图片分类: 
+        </span>
+        <ClientOnly>
+          <a-select
+          ref="select"
+          v-model:value="tab"
+          style="width: 120px"
+        >
+            <a-select-option v-for="category in tabs" :key="category.id" :value="category.id">{{ category.name }}</a-select-option>
+          </a-select>
+        </ClientOnly>
       </div>
       <div class="flex-1 pl-4">
-        <Button label="上传图片" class="mb-4" @click="upload"/>
+        <a-button type="primary" class="mb-4" @click="upload">上传图片</a-button>
         <div class="grid grid-cols-4 gap-4">
           <ClientOnly>
             <div v-for="item in images" :key="item.url" class="border-zinc-300 border rounded-md overflow-hidden">
               <div class="relative">
-                <Image alt="Image" class="image w-full h-36" preview style="display: block;">
-                  <template #previewicon>
-                      <i class="pi pi-search"></i>
-                  </template>
-                  <template #image>
-                      <img :src="item.url" alt="image" />
-                  </template>
-                  <template #preview="slotProps">
-                      <img :src="item.url" alt="preview" :style="slotProps.style" @click="slotProps.onClick" />
-                  </template>
-                </Image>
-                <!-- <div class="absolute bottom-0 left-0 right-0 z-1 bg-slate-100/[.8] contrast-50 text-center">
-                  <span class="text-sm">{{ item.name }}</span>
-                </div> -->
+                <a-image :src="item.url" />
               </div>
               <div class="bg-white p-4 text-center">
                 <template v-if="choose">
-                  <Button class="ml-2" label="选择" text severity="info" @click="chooseHandle(item.url)"/>
+                  <a-button type="primary" class="ml-2" @click="chooseHandle(item.url)">选择</a-button>
                 </template>
-                <Button class="ml-2" label="删除" text severity="danger" @click="deleteImage(item.id)"/>
+                <a-button class="ml-2" type="danger" @click="deleteImage(item.id)">删除</a-button>
               </div>
             </div>
           </ClientOnly>
         </div>
       </div>
     </div>
-    <Dialog v-model:visible="visible" modal :style="{ width: '30rem' }" header="图片上传" @hide="cancel">
+    <a-modal 
+      v-model:open="visible"
+      title="图片上传"
+      @cancel="cancel"
+      @ok="submit"
+    >
       <a-form-item
         label="图片上传"
         name="url"
       >
         <AppUpload v-model="form.url" />
       </a-form-item>
-      <div class="flex justify-end gap-2">
-        <Button label="取消" severity="secondary" @click="cancel" />
-        <Button label="完成" severity="info" @click="submit" />
-      </div>
-    </Dialog>
+    </a-modal>
   </div>
 </template>
-
-<style lang="less" scoped>
-.image {
-  img {
-    max-width: 100%;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
-}
-</style>
