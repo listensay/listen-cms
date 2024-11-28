@@ -1,31 +1,33 @@
 <script setup>
+import { rules } from '@/utils/antd_form_rules'
+
 const token = useCookie('token')
-const submit = async () => {
-  // 判断内容
-  if(userData.username === '' || userData.password === '') 
-    return show()
-  
-  // 登陆逻辑
-  try {
-    const result = await useRequestPost('/api/login', userData)
-    if(result.statusCode === 200) {
-      toast.add({severity: 'success', summary: '登陆成功', detail: '欢迎回来', life: 3000})
-    }
-    token.value = result.body.token
-    useUser().value.isLogin = true
-    navigateTo('/admin')
-  } catch {}
-}
+const router = useRouter()
+const route = useRoute()
+
+const formRef = ref()
 
 const userData = reactive({
   username: '',
   password: ''
 })
 
-const toast = useToast()
-
-const show = () => {
-  toast.add({severity: 'error', summary: '内容不完整', detail: '请填写完整内容', life: 3000})
+const submit = () => {
+  formRef.value
+    .validate()
+    .then(
+      async() => {
+        const result = await useRequestPost('/api/login', userData)
+        if(result.statusCode === 200) {
+          message.success('登陆成功')
+          token.value = result.body.token
+          const path = route.query.from || '/admin/dashboard'
+          router.push(path)
+        }
+      })
+    .catch(error => {
+      console.log('error', error)
+    })
 }
 
 definePageMeta({
@@ -37,18 +39,32 @@ definePageMeta({
   <div class="login">
     <div class="flex h-[100vh]">
       <div class="flex-1 flex justify-center items-center">
-        <form @submit.prevent="submit">
+        <a-form 
+          ref="formRef"
+          :model="userData"
+          autocomplete="off"
+          :rules="rules"
+        >
           <div class="mb-4">
-            <label for="username" class="mr-4">Username</label>
-            <InputText id="username" v-model="userData.username" aria-describedby="username-help" />
+            <a-form-item
+              label="Username"
+              name="username"
+              :rules="[{ required: true, message: 'Please input your username!' }]"
+            >
+              <a-input v-model:value="userData.username" />
+            </a-form-item>
           </div>
           <div class="mb-4">
-            <label for="password" class="mr-4">Password</label>
-            <InputText id="password" v-model="userData.password" aria-describedby="username-help" />
+            <a-form-item
+              label="Password"
+              name="password"
+              :rules="[{ required: true, message: 'Please input your password!' }]"
+            >
+              <a-input v-model:value="userData.password" />
+            </a-form-item>
           </div>
-          <Toast />
-          <Button label="Submit" @click="submit">Login</Button>
-        </form>
+          <a-button type="primary" @click="submit">Submit</a-button>
+        </a-form>
       </div>
       <div class="flex-1 bg-gradient-to-r from-cyan-500 to-blue-500"></div>
     </div>
