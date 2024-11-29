@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
         },
         author: {
           select: {
-            nickename: true,
+            nickname: true,
             avatar: true,
           }
         },
