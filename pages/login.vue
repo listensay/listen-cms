@@ -60,10 +60,10 @@ definePageMeta({
               name="password"
               :rules="[{ required: true, message: 'Please input your password!' }]"
             >
-              <a-input v-model:value="userData.password" />
+              <a-input-password v-model:value="userData.password" type="password" />
             </a-form-item>
           </div>
-          <a-button type="primary" @click="submit">Submit</a-button>
+          <a-button type="primary" @click="submit">登陆</a-button>
         </a-form>
       </div>
       <div class="flex-1 bg-gradient-to-r from-cyan-500 to-blue-500"></div>
