@@ -55,4 +55,37 @@ export const rules = {
       trigger: 'blur',
     },
   ],
+  email: [
+    {
+      required: true,
+      message: '请输入邮箱',
+      trigger: 'blur',
+    },
+    {
+      type: 'email',
+      message: '请输入正确的邮箱地址',
+      trigger: ['blur', 'change'],
+    },
+  ],
+  avatar: [
+    {
+      required: true,
+      message: '请上传头像',
+      trigger: 'change',
+    },
+  ],
+  nickname: [
+    {
+      required: true,
+      message: '请输入昵称',
+      trigger: 'blur',
+    },
+  ],
+  desc: [
+    {
+      required: true,
+      message: '请输入个人简介',
+      trigger: 'blur',
+    },
+  ]
 }
