@@ -44,7 +44,7 @@ watch(tab, async () => {
 const upload = () => {
   visible.value = true
   title.value = '上传图片'
-  form.categoryId = tab.value.id
+  form.categoryId = tab.value
 }
 
 const submit = async () => {
@@ -130,12 +130,11 @@ const chooseHandle = (url) => {
     </div>
     <a-modal 
       v-model:open="visible"
-      title="图片上传"
+      :title="title"
       @cancel="cancel"
       @ok="submit"
     >
       <a-form-item
-        label="图片上传"
         name="url"
       >
         <AppUpload v-model="form.url" />
