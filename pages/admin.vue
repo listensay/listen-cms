@@ -1,4 +1,6 @@
 <script setup>
+import useMainStore from '~/stores/main'
+
 definePageMeta({
   middleware: ['auth'],
 })
@@ -47,6 +49,10 @@ const tabs = [
     ]
   }
 ]
+
+const mainStore = useMainStore()
+const { fetchGetUserInfo } = mainStore
+await fetchGetUserInfo()
 </script>
 
 <template>
