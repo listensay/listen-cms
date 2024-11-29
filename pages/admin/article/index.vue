@@ -2,8 +2,12 @@
 const article = ref([])
 // 获取文章列表
 const getArticle = async () => {
-  const result = await useRequestGet('/api/auth/article', { page: 1, total: 10 })
-  article.value = result.body.list
+  try {
+    const result = await useRequestGet('/api/auth/article', { page: 1, total: 10 })
+    article.value = result.body.list
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 删除文章
