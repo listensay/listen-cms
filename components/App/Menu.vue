@@ -7,6 +7,18 @@ defineProps({
   router: {
     type: Boolean,
     default: true
+  },
+  color: {
+    type: String,
+    default: 'bg-white'
+  },
+  border: {
+    type: Boolean,
+    default: true
+  },
+  rounded: {
+    type: String,
+    default: 'rounded-md'
   }
 })
 
@@ -22,7 +34,7 @@ const currentPath = ref(route.fullPath)
 </script>
 
 <template>
-  <div style="width: 256px" class="bg-white border-zinc-100 border rounded-md">
+  <div :class="`${color} ${ border ? 'border-zinc-100': 'border-none' } border ${rounded} h-full`">
     <div class="p-5">
       <dl>
         <template v-for="item in tabs" :key="item.id">
