@@ -8,8 +8,10 @@
 
 <script setup lang="ts">
 useHead({
-  titleTemplate: (titleChunk) => {
-    return titleChunk ? `${titleChunk} - ListenCMS` : 'ListenCMS';
+  titleTemplate: (productCategory) => {
+    return productCategory
+      ? `${productCategory} - 背影如正面`
+      : '背影如正面'
   }
 })
 </script>
