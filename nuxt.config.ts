@@ -10,7 +10,8 @@ export default defineNuxtConfig({
     '@ant-design-vue/nuxt',
     'nuxt-monaco-editor',
     '@nuxt/image',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    'dayjs-nuxt'
   ],
   css: [
     '@/assets/css/style.css',
