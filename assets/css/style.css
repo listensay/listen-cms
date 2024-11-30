@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-  @apply text-sm
+  @apply text-sm bg-indigo-50
 }
