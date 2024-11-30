@@ -1,6 +1,5 @@
 import { message } from 'ant-design-vue'
-// import useAppStore from '~/store'
-
+import useMainStore from '~/stores/main'
 export const useRequest = async (url: any, options?: any) => {
   try {
     const reqUrl = url // 你的接口地址
@@ -23,7 +22,7 @@ export const useRequest = async (url: any, options?: any) => {
           case 401:
             message.error(response._data.message)
             useCookie('token').value = null
-            useUser().value.isLogin = false
+            useMainStore().setHaslogin(false)
             navigateTo('/login')
             break
           case 403:
