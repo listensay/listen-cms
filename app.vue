@@ -6,16 +6,6 @@
   </div>
 </template>
 
-<script setup lang="ts">
-useHead({
-  titleTemplate: (productCategory) => {
-    return productCategory
-      ? `${productCategory} - 背影如正面`
-      : '背影如正面'
-  }
-})
-</script>
-
 <style>
 .page-enter-active,
 .page-leave-active {
