@@ -27,8 +27,6 @@ export default defineEventHandler(async (event) => {
       return hellper().error(401, '未登录', false)
     }
 
-    // const password = await hashPassword(body.password)
-
     // 修改用户资料
     const result = await prisma.user.update({
       where: {
