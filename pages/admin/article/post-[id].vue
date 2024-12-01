@@ -2,6 +2,12 @@
 import { rules } from '@/utils/antd_form_rules'
 const id = Number(useRoute().params.id)
 
+const title = id !==0 ? '编辑文章' : '创建文章'
+
+useHead({
+  title,
+})
+
 const article = reactive({
   title: '',
   content: '',

@@ -31,12 +31,17 @@ const submit = () => {
 }
 
 definePageMeta({
-  middleware: 'only-visitor'
+  middleware: 'only-visitor',
+  layout: 'admin'
+})
+
+useHead({
+  title: '登录'
 })
 </script>
 
 <template>
-  <div class="login">
+  <div class="login bg-white">
     <div class="flex h-[100vh]">
       <div class="flex-1 flex justify-center items-center">
         <a-form 

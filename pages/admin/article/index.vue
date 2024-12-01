@@ -1,4 +1,8 @@
 <script setup>
+useHead({
+  title: '文章列表'
+})
+
 const article = ref([])
 // 获取文章列表
 const getArticle = async () => {

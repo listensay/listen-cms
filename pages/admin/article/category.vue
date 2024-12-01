@@ -1,6 +1,10 @@
 <script setup>
 import { rules } from '@/utils/antd_form_rules'
 
+useHead({
+  title: '分类管理'
+})
+
 const category = ref([])
 const total = ref(10)
 const page = ref(1)

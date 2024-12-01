@@ -1,4 +1,8 @@
 <script setup>
+useHead({
+  title: '图片管理'
+})
+
 const image = ref('')
 </script>
 

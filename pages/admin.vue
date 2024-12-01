@@ -3,6 +3,7 @@ import useMainStore from '~/stores/main'
 
 definePageMeta({
   middleware: ['auth'],
+  layout: 'admin',
 })
 
 const tabs = [
@@ -58,7 +59,7 @@ await fetchGetUserInfo()
 <template>
   <div class="layout">
     <div class="flex p-8 bg-slate-200 h-[100vh]">
-      <AppMenu :tabs="tabs" />
+      <AppMenu :tabs="tabs" class="w-64" />
       <NuxtPage class="ml-4 flex-1 h-full bg-white rounded-md p-4" />
     </div>
   </div>

@@ -19,7 +19,10 @@ try {
 
 <template>
   <div class="post bg-white rounded-md shadow-md h-full p-6">
-    <Title>{{ detail.title }}</Title>
+    <Head>
+      <Title>{{ detail.title }}</Title>
+      <Meta name="description" :content="detail.description" />
+    </Head>
     <div class="text-lg mb-4">{{ detail.title }}</div>
     <article class="prose prose-slate">{{ detail.content }}</article>
   </div>

@@ -30,7 +30,7 @@ const tabs = [
 
 <template>
   <div class="article flex h-full">
-    <AppMenu :tabs="tabs" />
+    <AppMenu :tabs="tabs" class="w-56" />
     <div class="flex-1">
       <NuxtPage />
     </div>

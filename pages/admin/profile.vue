@@ -2,6 +2,10 @@
 import useMainStore from '~/stores/main'
 import { rules } from '@/utils/antd_form_rules'
 
+useHead({
+  title: '个人中心'
+})
+
 const mainStore = useMainStore()
 const { userinfo } = storeToRefs(mainStore)
 const { fetchChangeUserInfo } = mainStore
