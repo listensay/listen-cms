@@ -1,4 +1,6 @@
-import { compare } from 'bcrypt'
+import bcrypt from 'bcryptjs'
+
+const { compare } = bcrypt
 
 export default async function checkPassword(submittedPassword: string, storedHash: string) {
   try {
