@@ -15,8 +15,8 @@
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@pinia/nuxt": "^0.8.0",
     "@primevue/themes": "^4.0.4",
-    "@prisma/nuxt": "^0.0.35",
-    "bcrypt": "^5.1.1",
+    "@prisma/client": "^5.13.0",
+    "bcryptjs": "^2.4.3",
     "formidable": "^3.5.1",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
@@ -29,12 +29,11 @@
     "vue": "latest"
   },
   "devDependencies": {
-    "@ant-design-vue/nuxt": "^1.4.2",
+    "@ant-design-vue/nuxt": "^1.4.6",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@primevue/nuxt-module": "^4.0.4",
-    "@prisma/client": "^5.22.0",
     "@tailwindcss/typography": "^0.5.15",
-    "@types/bcrypt": "^5.0.2",
+    "@types/bcryptjs": "^2.4.6",
     "@types/formidable": "^3.4.5",
     "@types/jsonwebtoken": "^9.0.6",
     "@typescript-eslint/eslint-plugin": "^8.1.0",
@@ -46,10 +45,12 @@
     "less": "^4.2.0",
     "nuxt": "^3.14.1592",
     "prettier": "^3.3.3",
+    "prisma": "^5.13.0",
     "typescript": "^5.5.4",
     "vue-tsc": "^2.0.29"
   },
   "overrides": {
-    "vue": "latest"
+    "vue": "latest",
+    "nitropack": "2.9.7"
   }
 }
