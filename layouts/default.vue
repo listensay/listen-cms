@@ -17,6 +17,12 @@ const tabs = [
       ]
   }
 ]
+
+useHead({
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk} - 背影如正面` : '背影如正面'
+  }
+})
 </script>
 
 <template>
