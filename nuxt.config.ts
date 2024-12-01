@@ -6,7 +6,6 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     '@nuxtjs/tailwindcss',
-    '@prisma/nuxt',
     '@ant-design-vue/nuxt',
     'nuxt-monaco-editor',
     '@nuxt/image',
@@ -26,5 +25,8 @@ export default defineNuxtConfig({
   },
   nitro: {
     modules: [nitroPublic()],
+    imports: {
+      dirs: ['server/utils'],
+    },
   }
 })
