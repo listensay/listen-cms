@@ -9,37 +9,46 @@ export const useRequest = async (url: any, options?: any) => {
       Authorization: useCookie('token').value
     }
 
+    let body
+
     const { data } = await useFetch(reqUrl, {
       ...options,
       headers: customHeaders,
       watch: false,
-      
+
       onResponseError({ response }) {
         switch (response.status) {
           case 400:
             message.error(response._data.message)
-            break
+            body = response._data
+            return
           case 401:
             message.error(response._data.message)
             useCookie('token').value = null
             useMainStore().setHaslogin(false)
             navigateTo('/login')
-            break
+            body = response._data
+            return
           case 403:
             message.error('服务器拒绝访问')
-            break
+            body = response._data
+            return
           case 404:
             message.error('请求地址错误')
-            break
+            body = response._data
+            return
           case 500:
             message.error('服务器故障')
-            break
+            body = response._data
+            return
           default:
             message.error('网络连接故障')
-            break
+            body = response._data
         }
       }
     })
+
+    if(!data.value) return body
 
     const result = data.value as any
 
