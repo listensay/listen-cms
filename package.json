@@ -43,6 +43,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-unicorn": "^55.0.0",
     "less": "^4.2.0",
+    "nitro-port-module": "^0.2.1",
     "nuxt": "^3.14.1592",
     "prettier": "^3.3.3",
     "prisma": "^5.13.0",

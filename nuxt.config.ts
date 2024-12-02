@@ -1,3 +1,5 @@
+import nitroPort from 'nitro-port-module'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import nitroPublic from 'nitro-public-module'
 
@@ -24,7 +26,12 @@ export default defineNuxtConfig({
     SECRET_KEY: process.env.SECRET_KEY
   },
   nitro: {
-    modules: [nitroPublic()],
+    modules: [
+      nitroPublic(),
+      nitroPort({
+        port: 4000,
+      }),
+    ],
     imports: {
       dirs: ['server/utils'],
     },
