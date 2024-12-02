@@ -2,10 +2,8 @@
 </script>
 
 <template>
-  <div>
-    <div>
-      <PostList />
-    </div>
+  <div class="h-full">
+    <PostList />
   </div>
 </template>
 
