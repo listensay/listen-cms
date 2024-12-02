@@ -15,8 +15,8 @@ const getArticle = async () => {
 }
 
 // 删除文章
-const deleteArticle = async (data) => {
-  const result = await useRequestDelete('/api/auth/article', { id: data.id })
+const deleteArticle = async (id) => {
+  const result = await useRequestDelete('/api/auth/article', { id })
   if(result.statusCode === 200) {
     message.success('删除成功')
   }
@@ -75,7 +75,7 @@ const columns = [
           </template>
           <!-- 操作 -->
           <template v-if="column.key === 'action'">
-            <a-button type="danger" size="small" @click="deleteArticle(record)">删除</a-button>
+            <a-button type="danger" size="small" @click="deleteArticle(record.id)">删除</a-button>
           </template>
         </template>
         <template #title>文章管理</template>
