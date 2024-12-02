@@ -22,7 +22,7 @@ try {
       <li v-for="post in posts" :key="post.id" class="border-b m-6 last:border-b-0">
         <nuxt-link :to="`/post/${post.id}`" class="flex  py-4 pt-0 pb-8">
           <div class="mr-4">
-            <NuxtImg :src="post.cover" width="40" height="40" class="rounded-full" />
+            <img :src="post.cover" width="40" height="40" class="rounded-full" />
           </div>
           <div class="flex-1">
             <div class="flex justify-between items-center mb-2 font-medium">

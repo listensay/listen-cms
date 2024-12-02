@@ -130,7 +130,7 @@ await getCategory()
                 <a-button @click="visible = true">上传缩略图</a-button>
               </template>
               <template v-else>
-                <NuxtImg class="rounded-md" :src="article.cover" width="100" height="100" @click="visible = true" />
+                <img class="rounded-md" :src="article.cover" width="100" height="100" @click="visible = true" />
               </template>
               <a-input
                 v-model:value="article.cover" 

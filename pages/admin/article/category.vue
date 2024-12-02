@@ -151,7 +151,7 @@ const columns = [
         </template>
 
         <template v-else-if="column.key === 'cover'">
-          <NuxtImg :src="record.cover" width="100" />
+          <img :src="record.cover" width="100" />
         </template>
 
         <template v-else-if="column.key === 'type'">
@@ -214,7 +214,7 @@ const columns = [
             <a-button @click="visibleImg = true">上传缩略图</a-button>
           </template>
           <template v-else>
-            <NuxtImg class="rounded-md" :src="form.cover" width="100" height="100" @click="visibleImg = true" />
+            <img class="rounded-md" :src="form.cover" width="100" height="100" @click="visibleImg = true" />
           </template>
         </a-form-item>
       </a-form>
