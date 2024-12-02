@@ -32,7 +32,7 @@ const form = reactive({
 
 // 获取分类列表
 const getCategory = async () => {
-  const result = await useRequestGet('/api/auth/category', { page, total })
+  const result = await useRequestGet('/api/auth/category', { page: page.value, total: total.value })
   category.value = result.body.list
 }
 
@@ -163,7 +163,7 @@ const columns = [
         <template v-else-if="column.key === 'action'">
           <span>
             <a-button type="primary" size="small" @click="updateCategory(record)">编辑</a-button>
-            <a-button type="danger" size="small" @click="deleteCategory(record)">删除</a-button>
+            <a-button type="danger" size="small" @click="deleteCategory(record.id)">删除</a-button>
           </span>
         </template>
       </template>
