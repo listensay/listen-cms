@@ -1,6 +1,4 @@
 import nitroPort from 'nitro-port-module'
-
-// https://nuxt.com/docs/api/configuration/nuxt-config
 import nitroPublic from 'nitro-public-module'
 
 export default defineNuxtConfig({
