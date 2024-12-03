@@ -16,6 +16,7 @@ export default defineEventHandler(async (event) => {
         published: joi.boolean().required(),
         description: joi.string().required(),
         category: joi.number().required(),
+        markdownContent: joi.string().required()
       })
     } catch (error) {
       console.log(error)
@@ -42,7 +43,8 @@ export default defineEventHandler(async (event) => {
         cover: body.cover,
         published: body.published,
         description: body.description,
-        categoryId: body.category
+        categoryId: body.category,
+        markdownContent: body.markdownContent
       }
     })
 

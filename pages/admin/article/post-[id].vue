@@ -1,11 +1,14 @@
 <script setup>
+import markdown from 'markdown-it'
 import { rules } from '@/utils/antd_form_rules'
+
+const md = markdown()
 const id = Number(useRoute().params.id)
 
-const title = id !==0 ? '编辑文章' : '创建文章'
+const title = ref(id !==0 ? '编辑文章' : '创建文章')
 
 useHead({
-  title,
+  title: title.value,
 })
 
 const article = reactive({
@@ -15,6 +18,7 @@ const article = reactive({
   cover: '',
   description: '',
   published: true,
+  markdownContent: '',
 })
 
 const formRef = ref()
@@ -31,7 +35,8 @@ const getCategory = async () => {
 const getPostDetail = async () => {
   const result = await useRequestGet('/api/auth/article/detail', { id })
   article.title = result.body.title
-  article.content = result.body.content
+  article.content = result.body.markdownContent
+  article.markdownContent = result.body.markdownContent
   article.description = result.body.description
   article.cover = result.body.cover
   article.category = result.body.categoryId
@@ -48,6 +53,8 @@ const onSubmit = () => {
     .validate()
     .then(
       async () => {
+          const result = md.render(article.markdownContent)
+          article.content = result
           if(id !== 0) {
             // 修改文章
             await updatePost()
@@ -102,10 +109,10 @@ await getCategory()
           </div>
           <div class="mb-4 border p-2 rounded-md">
             <ClientOnly>
-              <a-form-item ref="content" name="content">
-                <MonacoEditor v-model="article.content" style="height: 600px;" lang="markdown" />
+              <a-form-item ref="markdownContent" name="markdownContent">
+                <MonacoEditor v-model="article.markdownContent" style="height: 600px;" lang="markdown" />
                 <a-input
-                  v-model:value="article.content" 
+                  v-model:value="article.markdownContent" 
                   style="
                     width: 0px;
                     padding: 0px;

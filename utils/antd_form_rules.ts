@@ -87,5 +87,12 @@ export const rules = {
       message: '请输入个人简介',
       trigger: 'blur',
     },
+  ],
+  markdownContent: [
+    {
+      required: true,
+      message: '请输入内容',
+      trigger: 'blur',
+    },
   ]
 }

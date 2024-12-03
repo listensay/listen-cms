@@ -28,6 +28,7 @@ model Article {
   id        Int       @id @default(autoincrement())
   title     String
   content   String?   @db.Text
+  markdownContent String? @db.Text
   cover     String?
   published Boolean   @default(false)
   author    User      @relation(fields: [authorId], references: [id])

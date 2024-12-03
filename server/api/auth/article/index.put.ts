@@ -15,6 +15,7 @@ export default defineEventHandler(async (event) => {
       published: joi.boolean().required(),
       description: joi.string().required(),
       category: joi.number().required(),
+      markdownContent: joi.string().required()
     })
 
     if(!state){
@@ -40,6 +41,7 @@ export default defineEventHandler(async (event) => {
         cover: body.cover,
         published: body.published,
         description: body.description,
+        markdownContent: body.markdownContent,
         category: {
           connect: {
             id: body.category
