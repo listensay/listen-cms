@@ -6,6 +6,14 @@
   </div>
 </template>
 
+<script setup>
+useHead({
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk} - 背影如正面` : '背影如正面'
+  }
+})
+</script>
+
 <style>
 .page-enter-active,
 .page-leave-active {
