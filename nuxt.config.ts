@@ -35,5 +35,26 @@ export default defineNuxtConfig({
     imports: {
       dirs: ['server/utils'],
     },
+  },
+  antd: {
+    extractStyle: true,
+  },
+  vite: {
+    resolve: {
+      alias: [
+        {
+          find: /^(ant-design-vue)(?!\/(es|dist))/,
+          replacement: 'ant-design-vue/es',
+        },
+        {
+          find: /^ant-design-vue\/dist$/,
+          replacement: 'ant-design-vue/dist',
+        },
+        {
+          find: /^ant-design-vue\/es$/,
+          replacement: 'ant-design-vue/es',
+        },
+      ],
+    },
   }
 })
