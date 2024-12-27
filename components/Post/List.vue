@@ -17,7 +17,7 @@ try {
 </script>
 
 <template>
-  <div class="post bg-white p-4 w-full h-full rounded-md shadow-md">
+  <div class="post bg-white p-4 w-full h-full">
     <ul>
       <li v-for="post in posts" :key="post.id" class="border-b m-6 last:border-b-0">
         <nuxt-link :to="`/post/${post.id}`" class="flex  py-4 pt-0 pb-8">

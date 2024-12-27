@@ -12,16 +12,21 @@ useHead({
     return titleChunk ? `${titleChunk} - 背影如正面` : '背影如正面'
   }
 })
+
+
 </script>
 
 <style>
 .page-enter-active,
-.page-leave-active {
-  transition: all 0.4s;
+.page-leave-active{
+  transition: all 0.2s;
 }
-.page-enter-from,
+.page-enter-from{
+  opacity: 0;
+  transform: translate(50px, 0);
+}
 .page-leave-to {
   opacity: 0;
-  filter: blur(1rem);
+  transform: translate(-10px, 0);
 }
 </style>

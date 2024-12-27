@@ -20,12 +20,16 @@ const tabs = [
 </script>
 
 <template>
-  <div class="home h-[100vh] p-8 w-full">
-    <div class="flex h-full">
-      <div class="w-64 mr-4">
-        <AppMenu :tabs="tabs" :border="false" class="shadow-md" />
-      </div>
-      <div class="flex-1">
+  <div class=" flex w-full mx-auto h-[100vh] overflow-hidden">
+    <div class="flex-shrink-0 w-64">
+      <AppMenu :tabs="tabs" :border="false" rounded="" />
+    </div>
+    <div class="flex flex-1">
+      <div class="flex-shrink-0 h-full w-72 top-14 bg-slate-400">123</div>
+      <div class="flex-1 w-full overflow-y-auto">
+        <div class="sticky top-0 z-10 flex items-center bg-red-600 h-14">
+          123
+        </div>
         <slot />
       </div>
     </div>
