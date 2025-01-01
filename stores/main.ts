@@ -27,7 +27,7 @@ const useMainStore = defineStore('main', () => {
       if(result.statusCode === 200) {
         haslogin.value = false
         token.value = null
-        message.success('修改成功, 请重新登陆 : ) ')
+        message.success('修改成功, 请重新登录 : ) ')
         router.push('/login?from=/admin/profile')
       }
     } catch (error) {

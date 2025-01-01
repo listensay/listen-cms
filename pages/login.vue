@@ -19,7 +19,7 @@ const submit = () => {
       async() => {
         const result = await useRequestPost('/api/login', userData)
         if(result.statusCode === 200) {
-          message.success('登陆成功')
+          message.success('登录成功')
           token.value = result.body.token
           const path = route.query.from || '/admin/dashboard'
           router.push(path)
@@ -41,9 +41,9 @@ useHead({
 </script>
 
 <template>
-  <div class="login bg-white">
+  <div class="bg-white login">
     <div class="flex h-[100vh]">
-      <div class="flex-1 flex justify-center items-center">
+      <div class="flex items-center justify-center flex-1">
         <a-form 
           ref="formRef"
           :model="userData"
@@ -68,7 +68,7 @@ useHead({
               <a-input-password v-model:value="userData.password" type="password" />
             </a-form-item>
           </div>
-          <a-button type="primary" @click="submit">登陆</a-button>
+          <a-button type="primary" @click="submit">登录</a-button>
         </a-form>
       </div>
       <div class="flex-1 bg-gradient-to-r from-cyan-500 to-blue-500"></div>
