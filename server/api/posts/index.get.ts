@@ -20,6 +20,9 @@ export default defineEventHandler(async event => {
     const posts = await prisma.article.findMany({
       skip: skipValue,
       take: Number(body.total),
+      orderBy: {
+        createdAt: 'desc',
+      },
       include: {
         category: {
           select: {
