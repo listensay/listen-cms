@@ -15,6 +15,8 @@ try {
   console.log(error)
 }
 
+await useFetchPost().viewPost(id)
+
 useHead({
   title: detail.value.title,
   meta: [
@@ -33,6 +35,11 @@ useHead({
         class="mx-auto prose prose-lg prose-slate "
       >
         <div class="mb-8 text-3xl font-bold">{{ detail.title }}</div>
+        <div class="flex items-center text-sm text-gray-500">
+          <time class="block my-2" :datetime="$dayjs(detail.updatedAt).toString()">发布时间 {{ $dayjs(detail.updatedAt).format("YYYY-MM-DD").toString() }} </time>
+           <div class="mx-2"> · </div>
+          <div>阅读 {{ detail.views }}</div>
+        </div>
         <div v-html="detail.content"></div>
       </article>
     </div>
