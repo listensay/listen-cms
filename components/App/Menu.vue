@@ -19,6 +19,10 @@ defineProps({
   rounded: {
     type: String,
     default: 'rounded-md'
+  },
+  textColor: {
+    type: String,
+    default: 'text-gray-900'
   }
 })
 
@@ -34,15 +38,15 @@ const currentPath = ref(route.fullPath)
 </script>
 
 <template>
-  <div :class="`${color} ${ border ? 'border-zinc-100': 'border-none' } border ${rounded} h-full`">
+  <div :class="`${color} ${ border ? 'border-zinc-100': 'border-none' } border ${textColor} ${rounded} h-full`">
     <div class="p-5">
       <dl>
-        <template v-for="item in tabs" :key="item.id">
+        <div v-for="item in tabs" :key="item.id">
           <dd v-if="item.items">
             <ul>
               <li 
                 v-for="(tab, index) in item.items" :key="tab.url"
-                :class="`${currentPath === tab.url ? ' bg-zinc-100 rounded-md' : ''}`"
+                :class="`${currentPath === tab.url ? ' bg-black text-white rounded-3xl' : ''}`"
                 @click="changeMenu(tab, index)"
               >
                 <template v-if="router">
@@ -54,7 +58,7 @@ const currentPath = ref(route.fullPath)
               </li>
             </ul>
           </dd>
-        </template>
+        </div>
       </dl>
     </div>
   </div>

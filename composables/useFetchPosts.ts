@@ -1,6 +1,6 @@
 export interface pageInfo {
   page: number
-  pageSize: number
+  total: number
 }
 
 export default function useFetchPosts() {

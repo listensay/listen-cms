@@ -19,10 +19,20 @@ const useHomeStore = defineStore('home', () => {
     }
   }
 
+  const fetchGetCategorys = async (data: CategoryPageInfo) => {
+    try {
+      const result = await useFetchCategory().getCategories(data)
+      return result.body
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return {
     posts,
     fetchGetPosts,
-    fetchGetPost
+    fetchGetPost,
+    fetchGetCategorys
   }
 })
 

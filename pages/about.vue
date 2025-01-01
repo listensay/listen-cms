@@ -1,6 +1,6 @@
 <script setup>
 useHead({
-  title: '设置',
+  title: '关于我',
 })
 </script>
 

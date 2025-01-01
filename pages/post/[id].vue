@@ -28,12 +28,13 @@ useHead({
 
 <template>
   <div>
-    <div class="h-full p-6 bg-white post">
-      <div class="mb-4 text-lg">{{ detail.title }}</div>
+    <div class="p-6 pt-10">
       <article 
-        class="max-w-full prose prose-slate"
-        v-html="detail.content"
-      />
+        class="mx-auto prose prose-lg prose-slate "
+      >
+        <div class="mb-8 text-3xl font-bold">{{ detail.title }}</div>
+        <div v-html="detail.content"></div>
+      </article>
     </div>
   </div>
 </template>

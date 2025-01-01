@@ -3,7 +3,7 @@ import nitroPublic from 'nitro-public-module'
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   modules: [
     '@nuxtjs/tailwindcss',
     '@ant-design-vue/nuxt',
@@ -34,25 +34,4 @@ export default defineNuxtConfig({
       dirs: ['server/utils'],
     },
   },
-  antd: {
-    extractStyle: true,
-  },
-  vite: {
-    resolve: {
-      alias: [
-        {
-          find: /^(ant-design-vue)(?!\/(es|dist))/,
-          replacement: 'ant-design-vue/es',
-        },
-        {
-          find: /^ant-design-vue\/dist$/,
-          replacement: 'ant-design-vue/dist',
-        },
-        {
-          find: /^ant-design-vue\/es$/,
-          replacement: 'ant-design-vue/es',
-        },
-      ],
-    },
-  }
 })

@@ -1,3 +1,9 @@
+export interface CategoryPageInfo {
+  page: number
+  total: number
+  type: number
+}
+
 export default function useCategoryFetch() {
   return {
     auth: {
@@ -11,6 +17,9 @@ export default function useCategoryFetch() {
       getCategories: async (page: number = 1, total: number = 10, type: number = 0) => {
         return await useRequestGet('/api/auth/category', { page, total, type})
       }
+    },
+    getCategories: async (data: CategoryPageInfo) => {
+      return await useRequestGet('/api/category', data)
     }
   }
 }
