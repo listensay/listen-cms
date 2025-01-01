@@ -8,6 +8,8 @@ const { fetchGetPost } = homeStore
 
 const detail = ref(null)
 
+await useFetchPost().viewPost(id)
+
 try {
   const reuslt = await fetchGetPost(id)
   detail.value = reuslt
@@ -15,7 +17,6 @@ try {
   console.log(error)
 }
 
-await useFetchPost().viewPost(id)
 
 useHead({
   title: detail.value.title,
