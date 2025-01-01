@@ -33,6 +33,9 @@ export default defineEventHandler(async (event) => {
       orderBy: {
         createdAt: 'desc'
       },
+      where: {
+        isDeleted: false
+      }
     })
 
     // 获取总数

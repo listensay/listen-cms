@@ -31,7 +31,8 @@ export default defineEventHandler(async (event) => {
         createdAt: 'desc'
       },
       where: {
-        authorId: user.id
+        authorId: user.id,
+        isDeleted: false,
       },
       include: {
         category: {

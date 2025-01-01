@@ -33,7 +33,8 @@ export default defineEventHandler(async (event) => {
         createdAt: 'desc'
       },
       where: {
-        categoryId: Number(body.categoryId)
+        categoryId: Number(body.categoryId),
+        isDeleted: false,
       },
     })
     // 获取总数

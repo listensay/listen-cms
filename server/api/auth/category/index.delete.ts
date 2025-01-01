@@ -37,9 +37,12 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-      category = await prisma.category.delete({
+      category = await prisma.category.update({
         where: {
           id: Number(body.id)
+        },
+        data: {
+          isDeleted: true
         }
       })
     } catch (err) {

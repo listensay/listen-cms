@@ -36,6 +36,9 @@ export default defineEventHandler(async event => {
           },
         },
       },
+      where: {
+        isDeleted: false
+      }
     })
 
     const total = await prisma.article.count()

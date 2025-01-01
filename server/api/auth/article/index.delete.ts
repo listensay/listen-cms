@@ -22,10 +22,12 @@ export default defineEventHandler(async (event) => {
       return hellper().error(401, '未登录', false)
     }
 
-    // 逻辑代码
-    const article = await prisma.article.delete({
+    const article = await prisma.article.update({
       where: {
         id: body.id,
+      },
+      data: {
+        isDeleted: true,
       },
     })
 

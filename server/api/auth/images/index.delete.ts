@@ -36,9 +36,12 @@ export default defineEventHandler(async (event) => {
     }
 
     // 删除图片
-    images = await prisma.images.delete({
+    images = await prisma.images.update({
       where: {
         id: body.id
+      },
+      data: {
+        isDeleted: true
       }
     })
 

@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
     let user: any
 
     try {
-      // 用户登陆
+      // 用户登录
       user = await prisma.user.findFirst({
         where: {
           username: body.username
@@ -47,7 +47,7 @@ export default defineEventHandler(async (event) => {
       useRuntimeConfig().SECRET_KEY
     )
 
-    return hellper().success('登陆成功', { token })
+    return hellper().success('登录成功', { token })
   } catch (error) {
     console.log(error)
     return hellper().error()
