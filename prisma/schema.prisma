@@ -12,80 +12,116 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
   username  String
-  nickname String?
-  password String
-  avatar   String?
-  desc      String?
-  article Article[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  nickname  String?
+  password  String
+  avatar    String?
+  description String?
+  articles  Article[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  isDeleted  Boolean  @default(false)
+  deletedAt DateTime?
+  comments  Comments[]
 }
 
 model Article {
-  id        Int       @id @default(autoincrement())
-  title     String
-  content   String?   @db.Text
-  markdownContent String? @db.Text
-  cover     String?
-  published Boolean   @default(false)
-  author    User      @relation(fields: [authorId], references: [id])
-  authorId  Int
-  description String?
-  categoryId Int      @default(1)
-  category  Category  @relation(fields: [categoryId], references: [id])
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now()) @updatedAt
-  tags      Tags[]
-  views     Int       @default(0)
+  id               Int       @id @default(autoincrement())
+  title            String
+  content          String?   @db.Text
+  markdownContent  String?   @db.Text
+  cover            String?
+  published        Boolean   @default(false)
+  author           User      @relation(fields: [authorId], references: [id])
+  authorId         Int
+  description      String?
+  categoryId       Int
+  category         Category  @relation(fields: [categoryId], references: [id])
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @default(now()) @updatedAt
+  isDeleted        Boolean   @default(false)
+  deletedAt        DateTime?
+  tags             Tags[]
+  views            Int       @default(0)
+  comments         Comments[]
+  likes            Int       @default(0)
+  type             Int       @default(0) // 0: 文章, 1: 页面, 2: 作品
 }
 
 model Category {
-  id    Int     @id @default(autoincrement())
-  name  String
+  id          Int       @id @default(autoincrement())
+  name        String
   description String?
-  cover String?
-  type  Int? @default(0)
-  articles Article[]
-  images Images[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  cover       String?
+  type        Int?      @default(0)
+  articles    Article[]
+  images      Images[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
+  isDeleted   Boolean   @default(false)
+  deletedAt   DateTime?
 }
 
 model Images {
-  id       Int      @id @default(autoincrement())
-  url      String
-  name     String
-  categoryId Int @default(1)
-  category Category @relation(fields: [categoryId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-}
-
-model Seo {
-    id       Int      @id @default(autoincrement())
-    title    String
-    keywords String
-    description String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @default(now()) @updatedAt
+  id          Int       @id @default(autoincrement())
+  url         String
+  name        String
+  categoryId  Int
+  category    Category  @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
+  isDeleted   Boolean   @default(false)
+  deletedAt   DateTime?
 }
 
 model Tags {
-  id       Int      @id @default(autoincrement())
-  name     String
-  articles Article[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id          Int       @id @default(autoincrement())
+  name        String
+  articles    Article[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
+  isDeleted   Boolean   @default(false)
+  deletedAt   DateTime?
 }
 
 model Links {
-  id       Int      @id @default(autoincrement())
-  name     String
-  url      String
-  cover     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id          Int       @id @default(autoincrement())
+  name        String
+  url         String
+  cover       String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
+  isDeleted   Boolean   @default(false)
+  deletedAt   DateTime?
+}
+
+model Comments {
+  id               Int       @id @default(autoincrement())
+  username         String?
+  email            String?
+  url              String?
+  userId           Int?
+  user             User?     @relation(fields: [userId], references: [id])
+  content          String
+  article          Article   @relation(fields: [articleId], references: [id])
+  articleId        Int
+  parentComment    Comments? @relation("CommentToReplies", fields: [parentCommentId], references: [id])
+  parentCommentId  Int?
+  replies          Comments[] @relation("CommentToReplies")
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @default(now()) @updatedAt
+  isDeleted        Boolean    @default(false)
+  deletedAt        DateTime?
+}
+
+model Config {
+  id          Int       @id @default(autoincrement())
+  name        String
+  value       String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
+  isDeleted   Boolean   @default(false)
+  deletedAt   DateTime?
 }
