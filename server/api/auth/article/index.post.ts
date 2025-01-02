@@ -16,7 +16,8 @@ export default defineEventHandler(async (event) => {
         published: joi.boolean().required(),
         description: joi.string().required(),
         category: joi.number().required(),
-        markdownContent: joi.string().required()
+        markdownContent: joi.string().empty('')
+        
       })
     } catch (error) {
       console.log(error)

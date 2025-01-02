@@ -93,7 +93,7 @@ const chooseHandle = (url) => {
 </script>
 
 <template>
-  <div class="images h-full">
+  <div class="h-full images">
     <div class="flex h-full">
       <div class="w-52">
         <span>
@@ -113,11 +113,11 @@ const chooseHandle = (url) => {
         <a-button type="primary" class="mb-4" @click="upload">上传图片</a-button>
         <div class="grid grid-cols-4 gap-4">
           <ClientOnly>
-            <div v-for="item in images" :key="item.url" class="border-zinc-300 border rounded-md overflow-hidden">
+            <div v-for="item in images" :key="item.url" class="overflow-hidden border rounded-md border-zinc-300">
               <div class="relative">
                 <a-image :src="item.url" />
               </div>
-              <div class="bg-white p-4 text-center">
+              <div class="p-4 text-center bg-white">
                 <template v-if="choose">
                   <a-button type="primary" class="ml-2" @click="chooseHandle(item.url)">选择</a-button>
                 </template>

@@ -1,8 +1,5 @@
 <script setup>
-import markdown from 'markdown-it'
 import { rules } from '@/utils/antd_form_rules'
-
-const md = markdown()
 const id = Number(useRoute().params.id)
 
 const title = ref(id !==0 ? '编辑文章' : '创建文章')
@@ -35,7 +32,7 @@ const getCategory = async () => {
 const getPostDetail = async () => {
   const result = await useRequestGet('/api/auth/article/detail', { id })
   article.title = result.body.title
-  article.content = result.body.markdownContent
+  article.content = result.body.content
   article.markdownContent = result.body.markdownContent
   article.description = result.body.description
   article.cover = result.body.cover
@@ -53,8 +50,6 @@ const onSubmit = () => {
     .validate()
     .then(
       async () => {
-          const result = md.render(article.markdownContent)
-          article.content = result
           if(id !== 0) {
             // 修改文章
             await updatePost()
@@ -89,11 +84,10 @@ watch(() => article.cover, () => {
 })
 
 await getCategory()
-
 </script>
 
 <template>
-  <div class="article-add h-full">
+  <div class="h-full article-add">
     <div class="h-full">
       <a-form
         ref="formRef"
@@ -107,12 +101,14 @@ await getCategory()
               <a-input v-model:value="article.title" placeholder="文章标题" />
             </a-form-item>
           </div>
-          <div class="mb-4 border p-2 rounded-md">
+          <div class="p-2 mb-4 border rounded-md">
             <ClientOnly>
-              <a-form-item ref="markdownContent" name="markdownContent">
-                <MonacoEditor v-model="article.markdownContent" style="height: 600px;" lang="markdown" />
+              <a-form-item ref="content" name="content">
+                <ClientOnly>
+                  <Editor v-model="article.content" />
+                </ClientOnly>
                 <a-input
-                  v-model:value="article.markdownContent" 
+                  v-model:value="article.content" 
                   style="
                     width: 0px;
                     padding: 0px;
@@ -131,7 +127,7 @@ await getCategory()
 
         <div class="w-72">
           <div class="mb-4">
-            <div class="text-lg mb-2">文章缩略图</div>
+            <div class="mb-2 text-lg">文章缩略图</div>
             <a-form-item ref="cover" name="cover">
               <template v-if="article.cover === ''">
                 <a-button @click="visible = true">上传缩略图</a-button>
@@ -150,21 +146,17 @@ await getCategory()
             </a-form-item>
           </div>
           <div class="mb-4">
-            <div class="text-lg mb-2">文章分类</div>
+            <div class="mb-2 text-lg">文章分类</div>
             <ClientOnly>
-              <a-form-item ref="category" name="category">
-                <a-select
-                  ref="select"
-                  v-model:value="article.category"
-                  style="width: 120px"
-                >
+              <a-form-item>
+                <a-select v-model:value="article.category" style="width: 120px;">
                   <a-select-option v-for="item in category" :key="item.id" :value="item.id">{{ item.name }}</a-select-option>
                 </a-select>
               </a-form-item>
             </ClientOnly>
           </div>
           <div class="mb-4">
-            <div class="text-lg mb-2">文章状态</div>
+            <div class="mb-2 text-lg">文章状态</div>
             <div class="flex">
               <label for="switch1" class="mr-2">发布</label>
               <a-switch v-model:checked="article.published" />

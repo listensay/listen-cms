@@ -26,7 +26,8 @@ export default defineEventHandler(async (event) => {
           username: body.username
         }
       })
-    } catch {
+    } catch (error: any) {
+      console.log(error)
       setResponseStatus(event, 400)
       return hellper().error(400, '该用户名不存在', false)
     }

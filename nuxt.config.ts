@@ -10,7 +10,9 @@ export default defineNuxtConfig({
     'nuxt-monaco-editor',
     '@nuxt/image',
     '@pinia/nuxt',
-    'dayjs-nuxt'
+    'dayjs-nuxt',
+    'nuxt-tiptap-editor',
+    '@nuxt/icon',
   ],
   css: [
     '@/assets/css/style.css',
@@ -34,4 +36,22 @@ export default defineNuxtConfig({
       dirs: ['server/utils'],
     },
   },
+  vite: {
+    resolve: {
+      alias: [
+        {
+          find: /^(ant-design-vue)(?!\/(es|dist))/,
+          replacement: 'ant-design-vue/es',
+        },
+        {
+          find: /^ant-design-vue\/dist$/,
+          replacement: 'ant-design-vue/dist',
+        },
+        {
+          find: /^ant-design-vue\/es$/,
+          replacement: 'ant-design-vue/es',
+        },
+      ],
+    },
+  }
 })
